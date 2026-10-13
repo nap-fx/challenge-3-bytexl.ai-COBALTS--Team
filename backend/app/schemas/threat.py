@@ -3,14 +3,24 @@ from pydantic import BaseModel, Field, AliasChoices, ConfigDict
 
 
 class BrandProfile(BaseModel):
-    brand_id: str
-    brand_name: str
-    official_handle: str
-    official_domain: str
-    category: str
-    official_bio: str
-    verified_followers: int
-    logo_fingerprint_id: str
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+
+    brand_id: str = Field(default="BRD-001")
+    brand_name: str = Field(..., description="Company / Brand Name")
+    official_handle: str = Field(..., description="Official social media account handle, e.g., @bytexl_official")
+    official_domain: str = Field(default="bytexl.com", description="Official website domain")
+    category: str = Field(default="Enterprise Brand Asset")
+    official_bio: str = Field(default="", description="Official verified biography / description")
+    official_mobile_apps: List[str] = Field(
+        default_factory=list,
+        description="List of official mobile app package IDs, e.g. ['com.bytexl.app', 'com.bytexl.learning']"
+    )
+    official_publisher: str = Field(
+        default="ByteXL EdTech Pvt Ltd",
+        description="Official app store developer / publisher name"
+    )
+    verified_followers: int = Field(default=148000)
+    logo_fingerprint_id: str = Field(default="vec_bytexl_512d_v1")
 
 
 class ScanRequest(BaseModel):
@@ -20,12 +30,15 @@ class ScanRequest(BaseModel):
     suspect_handle: str = Field(
         default="@bytexl_support_official",
         validation_alias=AliasChoices("suspect_handle", "target_handle", "handle"),
-        description="Suspect social handle or app package"
+        description="Suspect social handle or mobile app name/package"
     )
-    platform: str = Field(default="Instagram", description="Platform: Instagram, X, Telegram, Google Play, Web")
+    platform: str = Field(
+        default="Instagram",
+        description="Platform: Instagram, X, Telegram, Google Play, App Store, Web"
+    )
     suspect_bio: str = Field(
         default="",
-        validation_alias=AliasChoices("suspect_bio", "bio", "description"),
+        validation_alias=AliasChoices("suspect_bio", "bio", "description", "app_description"),
         description="Bio or description text on the suspect profile/app"
     )
     suspect_url: Optional[str] = Field(
@@ -33,12 +46,17 @@ class ScanRequest(BaseModel):
         validation_alias=AliasChoices("suspect_url", "profile_url", "url"),
         description="External link or URL listed on the suspect profile"
     )
+    suspect_publisher: Optional[str] = Field(
+        default=None,
+        validation_alias=AliasChoices("suspect_publisher", "publisher", "developer"),
+        description="Developer/Publisher name on app store (used for App Store Monitoring)"
+    )
     visual_tampering_mode: str = Field(
         default="cloned_logo",
         description="Visual simulation mode: cloned_logo, cropped_tinted, watermarked, unrelated_avatar"
     )
-    account_age_days: int = Field(default=3, ge=0, description="Age of suspect account in days")
-    dormancy_gap_days: int = Field(default=0, ge=0, description="Days dormant before sudden activity (sleeper hack check)")
+    account_age_days: int = Field(default=3, ge=0, description="Age of suspect account/app in days")
+    dormancy_gap_days: int = Field(default=0, ge=0, description="Days dormant before sudden activity")
     followers_count: int = Field(default=42, ge=0)
     following_count: int = Field(default=4850, ge=0)
 
@@ -73,6 +91,7 @@ class HeuristicsResult(BaseModel):
     homoglyphs_detected: List[str]
     malicious_affixes: List[str]
     metadata_anomalies: List[str]
+    app_publisher_anomaly: Optional[str] = None
 
 
 class VictimReviewReport(BaseModel):
@@ -90,9 +109,9 @@ class ScanResponse(BaseModel):
     platform: str
     suspect_bio: str
     suspect_url: str
-    enricher_status: str = Field(default="LIVE_SCRAPE_OK", description="LIVE_SCRAPE_OK, CAPTCHA_FALLBACK, URL_OFFLINE_PARSED, MANUAL_INPUT")
-    social_reach_score: float = Field(default=24.0, description="0-100 exposure index based on followers/shares")
-    # Primary & alias fields for seamless frontend compatibility
+    enricher_status: str = Field(default="LIVE_SCRAPE_OK")
+    social_reach_score: float = Field(default=24.0)
+    is_official_asset: bool = Field(default=False, description="True if verified as genuine official asset and excluded")
     unified_threat_score: float
     impersonation_score: float
     visual_match_percent: float
