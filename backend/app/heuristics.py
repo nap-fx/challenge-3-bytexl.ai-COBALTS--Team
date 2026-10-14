@@ -6,16 +6,90 @@ and sleeper dormancy / burner account anomaly metrics.
 
 import math
 import re
-from typing import List, Tuple, Dict, Any
-from .schemas import HeuristicsResult
+from typing import List, Tuple, Dict, Any, Optional
+from .schemas import HeuristicsResult, FollowerVelocityTimeline
 
 
 SCAM_AFFIXES = [
+    # Support & Authority Spoofing
     "support", "official", "helpdesk", "care", "refund", "refunds",
     "careers", "hiring", "jobs", "india", "verified", "help", "service",
     "desk", "portal", "team", "admin", "pay", "rewards", "claim",
-    "recruiters", "admissions", "placement", "offers", "verify"
+    "recruiters", "admissions", "placement", "placements", "offers", "verify",
+    "verification", "kyc", "recovery", "helpline", "assistance", "agent",
+    # Academic, Campus, Placement & Exam Leaks
+    "exam", "exams", "leak", "leaks", "dumps", "paper", "papers",
+    "answers", "answerkey", "cheat", "cheats", "cracked", "lms",
+    "course", "courses", "cert", "certification", "cell", "internship",
+    "internships", "council", "board", "campus", "student", "college"
 ]
+
+
+def extract_deceptive_tokens(handle: str) -> List[str]:
+    """
+    Extracts high-risk scam/phishing/impersonation tokens from any handle slug.
+    Checks delimited tokens, prefixes, and suffixes.
+    """
+    clean = re.sub(r"[^a-z0-9_.\-]", "", handle.lower().lstrip("@"))
+    tokens = [t for t in re.split(r"[._\-]+", clean) if t]
+    matched: List[str] = []
+
+    for tok in tokens:
+        for affix in SCAM_AFFIXES:
+            if tok == affix:
+                matched.append(affix)
+            elif len(tok) >= len(affix) + 3:
+                if tok.startswith(affix) or tok.endswith(affix):
+                    matched.append(affix)
+
+    # Substring check for compound tokens like 'placementdesk' or 'examleaks'
+    compact = re.sub(r"[._\-0-9]", "", clean)
+    for affix in ("placement", "examleak", "helpdesk", "customercare", "answerkey", "dumps"):
+        if affix in compact and affix not in matched:
+            matched.append(affix)
+
+    return sorted(list(set(matched)))
+
+
+def extract_brand_candidate_from_handle(handle: str) -> Optional[str]:
+    """
+    Extracts the root brand candidate from a handle slug by stripping known deceptive affixes.
+    e.g., '@amazon_help_desk' -> 'Amazon'
+    e.g., '@bytexl_support_official' -> 'ByteXL'
+    e.g., '@netflix_india_care' -> 'Netflix'
+    e.g., '@flipkart_refund_support' -> 'Flipkart'
+    """
+    clean = re.sub(r"[^a-z0-9_.\-]", "", handle.lower().lstrip("@"))
+    tokens = [t for t in re.split(r"[._\-]+", clean) if t]
+    
+    brand_tokens = [
+        t for t in tokens 
+        if t not in SCAM_AFFIXES and len(t) >= 3 and not t.isdigit()
+    ]
+    if brand_tokens:
+        candidate = brand_tokens[0]
+        brand_map = {
+            "bytexl": "ByteXL",
+            "kampus": "Kampus.vc",
+            "zomato": "Zomato",
+            "paytm": "Paytm",
+            "zerodha": "Zerodha",
+            "amazon": "Amazon",
+            "google": "Google",
+            "microsoft": "Microsoft",
+            "netflix": "Netflix",
+            "flipkart": "Flipkart",
+            "apple": "Apple",
+            "spotify": "Spotify",
+            "uber": "Uber",
+            "swiggy": "Swiggy",
+            "tcs": "TCS",
+            "infosys": "Infosys",
+            "wipro": "Wipro",
+        }
+        return brand_map.get(candidate, candidate.title())
+    return None
+
 
 HOMOGLYPH_RULES: List[Tuple[str, str, str]] = [
     ("rn", "m", "'rn' substituted for 'm' (digraph homoglyph)"),
@@ -172,6 +246,13 @@ def analyze_handle_and_metadata(
         mutation_bonus = min(15.0, len(word_mutations) * 15.0)
         final_score = min(99.0, base_deception + affix_bonus + glyph_bonus + mutation_bonus + meta_risk_bonus)
 
+    velocity_prof = generate_velocity_profile(
+        followers_count=followers_count,
+        following_count=following_count,
+        account_age_days=account_age_days,
+        dormancy_gap_days=dormancy_gap_days,
+    )
+
     return HeuristicsResult(
         score=round(final_score, 1),
         levenshtein_distance=dist_brand,
@@ -179,4 +260,72 @@ def analyze_handle_and_metadata(
         homoglyphs_detected=homoglyphs_found,
         malicious_affixes=sorted(set(detected_affixes)),
         metadata_anomalies=anomalies,
+        velocity_profile=velocity_prof,
+    )
+
+
+def generate_velocity_profile(
+    followers_count: int,
+    following_count: int,
+    account_age_days: int,
+    dormancy_gap_days: int
+) -> FollowerVelocityTimeline:
+    """
+    Evaluates follower growth velocity anomalies (Pillar 3 Cat 3-5):
+    - Distinguishes organic growth vs. sudden bot farm inflation or sleeper burst.
+    - Generates 7-day timeline telemetry for frontend graphing.
+    """
+    if dormancy_gap_days > 180:
+        classification = "SLEEPER_BURST"
+        anomaly_score = 88.0
+        timeline = [
+            {"day": "Day 1", "followers": max(10, followers_count // 20)},
+            {"day": "Day 2", "followers": max(10, followers_count // 20)},
+            {"day": "Day 3", "followers": max(10, followers_count // 20)},
+            {"day": "Day 4", "followers": max(15, followers_count // 15)},
+            {"day": "Day 5", "followers": followers_count // 4},
+            {"day": "Day 6", "followers": followers_count // 2},
+            {"day": "Day 7", "followers": followers_count},
+        ]
+    elif account_age_days <= 14 and followers_count > 500:
+        classification = "BOT_FARM_INFLATION"
+        anomaly_score = 92.0
+        timeline = [
+            {"day": "Day 1", "followers": 2},
+            {"day": "Day 2", "followers": 15},
+            {"day": "Day 3", "followers": 80},
+            {"day": "Day 4", "followers": followers_count // 3},
+            {"day": "Day 5", "followers": followers_count // 2},
+            {"day": "Day 6", "followers": int(followers_count * 0.85)},
+            {"day": "Day 7", "followers": followers_count},
+        ]
+    elif following_count > 2000 and followers_count > 2000:
+        classification = "PAID_PROMOTION_SPIKE"
+        anomaly_score = 55.0
+        timeline = [
+            {"day": "Day 1", "followers": followers_count // 3},
+            {"day": "Day 2", "followers": int(followers_count * 0.4)},
+            {"day": "Day 3", "followers": int(followers_count * 0.5)},
+            {"day": "Day 4", "followers": int(followers_count * 0.7)},
+            {"day": "Day 5", "followers": int(followers_count * 0.85)},
+            {"day": "Day 6", "followers": int(followers_count * 0.95)},
+            {"day": "Day 7", "followers": followers_count},
+        ]
+    else:
+        classification = "ORGANIC_GROWTH"
+        anomaly_score = 12.0
+        timeline = [
+            {"day": "Day 1", "followers": max(1, int(followers_count * 0.75))},
+            {"day": "Day 2", "followers": max(2, int(followers_count * 0.79))},
+            {"day": "Day 3", "followers": max(3, int(followers_count * 0.84))},
+            {"day": "Day 4", "followers": max(4, int(followers_count * 0.88))},
+            {"day": "Day 5", "followers": max(5, int(followers_count * 0.92))},
+            {"day": "Day 6", "followers": max(6, int(followers_count * 0.96))},
+            {"day": "Day 7", "followers": followers_count},
+        ]
+
+    return FollowerVelocityTimeline(
+        growth_classification=classification,
+        velocity_anomaly_score=anomaly_score,
+        daily_timeline=timeline
     )

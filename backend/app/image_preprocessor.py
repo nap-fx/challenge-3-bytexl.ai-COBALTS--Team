@@ -8,9 +8,34 @@ import io
 import urllib.request
 from typing import Tuple, Optional
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageChops
 
 TARGET_SIZE = 224
+
+
+def crop_active_foreground(image: Image.Image) -> Image.Image:
+    """
+    Trims solid uniform borders (white, black, or transparent letterboxing)
+    to isolate the active foreground logo glyph before tensor normalization.
+    Defeats adversarial letterboxing and padding evasion.
+    """
+    if image.mode in ("RGBA", "LA"):
+        bbox = image.getbbox()
+        if bbox and (bbox[2] - bbox[0] > 10) and (bbox[3] - bbox[1] > 10):
+            return image.crop(bbox)
+
+    img_rgb = image.convert("RGB")
+    # Check top-left corner background color
+    bg_color = img_rgb.getpixel((0, 0))
+    bg = Image.new("RGB", img_rgb.size, bg_color)
+    diff = ImageChops.difference(img_rgb, bg)
+    bbox = diff.getbbox()
+    if bbox:
+        bw = bbox[2] - bbox[0]
+        bh = bbox[3] - bbox[1]
+        if bw > 10 and bh > 10:
+            return image.crop(bbox)
+    return image
 
 
 def pad_to_square(image: Image.Image, background_color: Tuple[int, int, int] = (255, 255, 255)) -> Image.Image:
@@ -34,11 +59,13 @@ def pad_to_square(image: Image.Image, background_color: Tuple[int, int, int] = (
 
 def preprocess_image_to_224_rgb(image: Image.Image) -> Tuple[Image.Image, np.ndarray]:
     """
-    1. Pads image to 1:1 square ratio.
-    2. Resizes to 224x224 RGB using high-quality Lanczos resampling.
-    3. Converts to normalized float32 tensor [1, 3, 224, 224] (standard vision input).
+    1. Trims uniform letterboxing/padding (defeats white/black padding evasion).
+    2. Pads image to 1:1 square ratio.
+    3. Resizes to 224x224 RGB using high-quality Lanczos resampling.
+    4. Converts to normalized float32 tensor [1, 3, 224, 224] (standard vision input).
     """
-    squared = pad_to_square(image)
+    cropped = crop_active_foreground(image)
+    squared = pad_to_square(cropped)
     resized = squared.resize((TARGET_SIZE, TARGET_SIZE), Image.Resampling.LANCZOS)
 
     # Convert to float32 numpy array and normalize [0, 1]

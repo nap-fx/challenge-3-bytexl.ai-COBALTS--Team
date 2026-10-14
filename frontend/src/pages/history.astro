@@ -1,0 +1,301 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Layout title="AegisMark AI — Forensic Investigation Archive" activeTab="history">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-10">
+
+    <!-- 1. EDITORIAL HEADER & AUDIT OVERVIEW -->
+    <section class="border-b border-[#e6dfd8] dark:border-[#24221e] pb-8 space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-6 bg-accent rounded-full inline-block"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-[#78756d] dark:text-[#8e8b82] font-mono">
+          CHAIN OF CUSTODY // AUDIT REGISTRY
+        </span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] leading-tight">
+        Cryptographic Investigation Archive & Past Dossiers
+      </h1>
+
+      <p class="text-sm sm:text-base text-[#78756d] dark:text-[#8e8b82] max-w-3xl leading-relaxed">
+        Historical record of every multi-modal profile scan, rogue app triage, and legal cease-and-desist action executed across the AegisMark defense mesh.
+      </p>
+
+      <!-- Stats Bar -->
+      <div class="flex flex-wrap items-center gap-4 text-xs font-mono pt-2">
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] px-4 py-2 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] shadow-xs flex items-center gap-2">
+          <span class="text-[#78756d] dark:text-[#8e8b82]">AUDIT LOG STORAGE:</span>
+          <strong class="text-[#141413] dark:text-[#faf9f5]">SQLite Persistent (`scans_audit.db`)</strong>
+        </div>
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] px-4 py-2 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] shadow-xs flex items-center gap-2">
+          <span class="text-[#78756d] dark:text-[#8e8b82]">ENDPOINT:</span>
+          <strong class="text-[#141413] dark:text-[#faf9f5]">GET /api/v1/scans/history</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. AUDIT LOG TABLE -->
+    <section class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 sm:p-8 rounded-3xl shadow-xs space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-5">
+        <div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+            RECORDED INVESTIGATION DOSSIERS
+          </h2>
+          <span class="text-xs text-[#78756d] dark:text-[#8e8b82] block mt-1">
+            Click any row to inspect complete forensic telemetry and chain-of-custody citations.
+          </span>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex items-center gap-3">
+          <select id="filter-severity" class="bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] px-3.5 py-2 rounded-xl font-mono outline-none shadow-2xs cursor-pointer">
+            <option value="ALL">All Severities</option>
+            <option value="CRITICAL">Critical Only</option>
+            <option value="HIGH">High Risk</option>
+            <option value="LOW">Low / Safe</option>
+          </select>
+
+          <button id="refresh-history-btn" class="btn-3d-pop bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#e6dfd8] dark:hover:bg-[#2d2b26] border border-[#e6dfd8] dark:border-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer">
+            <span>↻</span>
+            <span>REFRESH AUDIT LOG</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Historical Scans Table -->
+      <div class="overflow-x-auto rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-[#faf9f5] dark:bg-[#121110] text-[#78756d] dark:text-[#8e8b82] border-b border-[#e6dfd8] dark:border-[#2d2b26] font-mono text-[11px] uppercase">
+            <tr>
+              <th class="p-3.5 font-bold">Case ID</th>
+              <th class="p-3.5 font-bold">Target Brand</th>
+              <th class="p-3.5 font-bold">Suspect Target / Handle</th>
+              <th class="p-3.5 font-bold">Platform</th>
+              <th class="p-3.5 font-bold">Threat Index</th>
+              <th class="p-3.5 font-bold">Severity</th>
+              <th class="p-3.5 font-bold">Timestamp UTC</th>
+              <th class="p-3.5 font-bold text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body" class="divide-y divide-[#e6dfd8]/60 dark:divide-[#2d2b26] font-mono bg-transparent">
+            <!-- Row 1: ByteXL -->
+            <tr class="hover:bg-[#f4efe6]/60 dark:hover:bg-[#24221e]/80 cursor-pointer transition-colors" data-case="4F41935B">
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5]">4F41935B</td>
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5] font-sans">ByteXL</td>
+              <td class="p-3.5 text-rose-600 dark:text-rose-400 font-bold">@bytexl_support_official</td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82]">Instagram</td>
+              <td class="p-3.5 font-bold text-rose-600 dark:text-rose-400">92.0 / 100</td>
+              <td class="p-3.5">
+                <span class="bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 font-bold px-2.5 py-0.5 rounded-full text-[10px]">CRITICAL</span>
+              </td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82] text-[11px]">2026-10-13 18:20 UTC</td>
+              <td class="p-3.5 text-right">
+                <button class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs cursor-pointer">INSPECT</button>
+              </td>
+            </tr>
+
+            <!-- Row 2: ByteXL Rogue App -->
+            <tr class="hover:bg-[#f4efe6]/60 dark:hover:bg-[#24221e]/80 cursor-pointer transition-colors" data-case="BBDF9844">
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5]">BBDF9844</td>
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5] font-sans">ByteXL</td>
+              <td class="p-3.5 text-rose-600 dark:text-rose-400 font-bold">com.bytexl.placement.guide</td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82]">Google Play</td>
+              <td class="p-3.5 font-bold text-rose-600 dark:text-rose-400">88.4 / 100</td>
+              <td class="p-3.5">
+                <span class="bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 font-bold px-2.5 py-0.5 rounded-full text-[10px]">CRITICAL</span>
+              </td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82] text-[11px]">2026-10-13 19:37 UTC</td>
+              <td class="p-3.5 text-right">
+                <button class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs cursor-pointer">INSPECT</button>
+              </td>
+            </tr>
+
+            <!-- Row 3: Zomato Phishing -->
+            <tr class="hover:bg-[#f4efe6]/60 dark:hover:bg-[#24221e]/80 cursor-pointer transition-colors" data-case="8A21B91C">
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5]">8A21B91C</td>
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5] font-sans">Zomato</td>
+              <td class="p-3.5 text-rose-600 dark:text-rose-400 font-bold">@z0mato_refunds_care</td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82]">X (Twitter)</td>
+              <td class="p-3.5 font-bold text-rose-600 dark:text-rose-400">94.8 / 100</td>
+              <td class="p-3.5">
+                <span class="bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 font-bold px-2.5 py-0.5 rounded-full text-[10px]">CRITICAL</span>
+              </td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82] text-[11px]">2026-10-13 15:40 UTC</td>
+              <td class="p-3.5 text-right">
+                <button class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs cursor-pointer">INSPECT</button>
+              </td>
+            </tr>
+
+            <!-- Row 4: Student Fan Club -->
+            <tr class="hover:bg-[#f4efe6]/60 dark:hover:bg-[#24221e]/80 cursor-pointer transition-colors" data-case="1C74E09F">
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5]">1C74E09F</td>
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5] font-sans">ByteXL</td>
+              <td class="p-3.5 text-emerald-600 dark:text-emerald-400 font-bold">@cu_coding_community</td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82]">Instagram</td>
+              <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">18.4 / 100</td>
+              <td class="p-3.5">
+                <span class="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-bold px-2.5 py-0.5 rounded-full text-[10px]">LOW</span>
+              </td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82] text-[11px]">2026-10-12 11:15 UTC</td>
+              <td class="p-3.5 text-right">
+                <button class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs cursor-pointer">INSPECT</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. CASE DETAIL INSPECTION DRAWER/MODAL -->
+    <div id="history-modal" class="fixed inset-0 z-50 hidden bg-[#121110]/70 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl rounded-3xl overflow-hidden">
+        <div class="bg-[#faf9f5] dark:bg-[#121110] text-[#141413] dark:text-[#faf9f5] px-6 py-4 flex items-center justify-between border-b border-[#e6dfd8] dark:border-[#2d2b26]">
+          <div>
+            <h3 class="font-serif font-bold text-lg">INVESTIGATION AUDIT DOSSIER</h3>
+            <span id="hist-modal-case-id" class="text-xs text-accent font-mono font-bold">CASE-4F41935B</span>
+          </div>
+          <button id="close-hist-modal" class="text-[#78756d] hover:text-[#141413] dark:hover:text-[#faf9f5] text-lg cursor-pointer p-1 rounded-xl">✕</button>
+        </div>
+
+        <div class="p-6 overflow-y-auto flex-1 space-y-4 text-xs font-mono text-[#141413] dark:text-[#faf9f5]">
+          <div class="bg-[#faf9f5] dark:bg-[#121110] p-4 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] grid grid-cols-2 gap-4">
+            <div>
+              <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase font-sans font-semibold">Protected Brand</span>
+              <strong id="hist-brand" class="text-[#141413] dark:text-[#faf9f5] font-sans text-sm">ByteXL</strong>
+            </div>
+            <div>
+              <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase font-sans font-semibold">Suspect Target</span>
+              <strong id="hist-target" class="text-rose-600 dark:text-rose-400 text-sm">@bytexl_support_official</strong>
+            </div>
+            <div>
+              <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase font-sans font-semibold">Threat Score</span>
+              <strong id="hist-score" class="text-rose-600 dark:text-rose-400 text-sm">92.0 / 100 (CRITICAL)</strong>
+            </div>
+            <div>
+              <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase font-sans font-semibold">Platform</span>
+              <strong id="hist-platform" class="text-[#141413] dark:text-[#faf9f5]">Instagram</strong>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#141413] dark:text-[#faf9f5] uppercase tracking-wider mb-2 font-sans">
+              Recorded Findings & Citations
+            </label>
+            <div id="hist-details" class="p-4 bg-[#ffffff] dark:bg-[#181715] rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2 text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              <p>• 512-dim CLIP Cosine Similarity: 96.4% match with official logo assets.</p>
+              <p>• DistilBERT NLP Fraud Classification: UPI address 'bytexl.hr@okhdfcbank' flagged for advance-fee scam.</p>
+              <p>• Burner account profile age: 3 days old with artificial follower buy-in spike.</p>
+            </div>
+          </div>
+
+          <div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 p-3.5 rounded-2xl text-[11px] font-medium">
+            ✓ Takedown strike package authorized & logged into forensic chain-of-custody archive.
+          </div>
+        </div>
+
+        <div class="bg-[#faf9f5] dark:bg-[#121110] px-6 py-4 border-t border-[#e6dfd8] dark:border-[#2d2b26] flex justify-end">
+          <button id="hist-modal-close-btn" class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-xs cursor-pointer">CLOSE DOSSIER</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  import { apiFetch } from '../lib/api';
+
+  const modal = document.getElementById('history-modal');
+  const closeModal = document.getElementById('close-hist-modal');
+  const closeBtn = document.getElementById('hist-modal-close-btn');
+  const refreshBtn = document.getElementById('refresh-history-btn');
+  const tableBody = document.getElementById('history-table-body');
+  const filterSev = document.getElementById('filter-severity') as HTMLSelectElement;
+
+  closeModal?.addEventListener('click', () => modal?.classList.add('hidden'));
+  closeBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
+
+  // Wire table row clicks
+  function attachRowListeners() {
+    document.querySelectorAll('#history-table-body tr').forEach(row => {
+      row.addEventListener('click', () => {
+        const caseId = row.getAttribute('data-case') || '4F41935B';
+        const brand = row.querySelector('td:nth-child(2)')?.textContent?.trim() || 'ByteXL';
+        const target = row.querySelector('td:nth-child(3)')?.textContent?.trim() || '@target';
+        const platform = row.querySelector('td:nth-child(4)')?.textContent?.trim() || 'Platform';
+        const score = row.querySelector('td:nth-child(5)')?.textContent?.trim() || '88 / 100';
+        const sev = row.querySelector('td:nth-child(6)')?.textContent?.trim() || 'CRITICAL';
+
+        (document.getElementById('hist-modal-case-id') as HTMLElement).textContent = `CASE-${caseId}`;
+        (document.getElementById('hist-brand') as HTMLElement).textContent = brand;
+        (document.getElementById('hist-target') as HTMLElement).textContent = target;
+        (document.getElementById('hist-platform') as HTMLElement).textContent = platform;
+        (document.getElementById('hist-score') as HTMLElement).textContent = `${score} (${sev})`;
+        modal?.classList.remove('hidden');
+      });
+    });
+  }
+
+  attachRowListeners();
+
+  // Severity Filter
+  filterSev?.addEventListener('change', () => {
+    const val = filterSev.value;
+    document.querySelectorAll('#history-table-body tr').forEach(row => {
+      const sevBadge = row.querySelector('td:nth-child(6)')?.textContent?.trim() || '';
+      if (val === 'ALL') {
+        (row as HTMLElement).style.display = '';
+      } else if (val === 'CRITICAL' && sevBadge.includes('CRITICAL')) {
+        (row as HTMLElement).style.display = '';
+      } else if (val === 'HIGH' && (sevBadge.includes('HIGH') || sevBadge.includes('CRITICAL'))) {
+        (row as HTMLElement).style.display = '';
+      } else if (val === 'LOW' && (sevBadge.includes('LOW') || sevBadge.includes('SAFE'))) {
+        (row as HTMLElement).style.display = '';
+      } else {
+        (row as HTMLElement).style.display = 'none';
+      }
+    });
+  });
+
+  refreshBtn?.addEventListener('click', async () => {
+    try {
+      const history = await apiFetch<any[]>('/api/v1/scans/history?limit=20');
+      if (Array.isArray(history) && history.length > 0 && tableBody) {
+        tableBody.innerHTML = history.map(item => {
+          const score = Math.round(item.unified_threat_score || 0);
+          const isCrit = score >= 70;
+          const isLow = score < 30;
+          const sevClass = isCrit
+            ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30'
+            : isLow
+            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+            : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30';
+          const textScoreClass = isCrit ? 'text-rose-600 dark:text-rose-400' : isLow ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400';
+
+          return `
+            <tr class="hover:bg-[#f4efe6]/60 dark:hover:bg-[#24221e]/80 cursor-pointer transition-colors" data-case="${item.scan_id}">
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5]">${item.scan_id}</td>
+              <td class="p-3.5 font-bold text-[#141413] dark:text-[#faf9f5] font-sans">${item.brand_name || 'Protected Brand'}</td>
+              <td class="p-3.5 ${textScoreClass} font-bold">${item.target_handle || item.suspect_handle}</td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82]">${item.platform || 'Social'}</td>
+              <td class="p-3.5 font-bold ${textScoreClass}">${score} / 100</td>
+              <td class="p-3.5">
+                <span class="${sevClass} font-bold px-2.5 py-0.5 rounded-full text-[10px]">${item.severity_level || (isCrit ? 'CRITICAL' : isLow ? 'LOW' : 'HIGH')}</span>
+              </td>
+              <td class="p-3.5 text-[#78756d] dark:text-[#8e8b82] text-[11px]">${item.timestamp_utc || 'Recently'}</td>
+              <td class="p-3.5 text-right">
+                <button class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs cursor-pointer">INSPECT</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        attachRowListeners();
+      }
+    } catch (err) {
+      console.warn("History refresh notice...", err);
+    }
+  });
+</script>

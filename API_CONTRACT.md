@@ -133,3 +133,180 @@
 * `GET /api/v1/health` — System status & active ML models.
 * `GET /api/v1/brands` — Monitored enterprise brands + SOC KPI counters.
 * `GET /api/v1/presets` — 4 pre-loaded demo scenarios for 1-click judge testing.
+
+---
+
+## 6. Recent Posts Extractor (OCR + Audio Track Evidence)
+**Endpoint:** `POST /api/v1/profile/posts`
+
+### Request Body (`application/json`)
+```json
+{
+  "url": "https://instagram.com/the_longwayx",
+  "handle": "@the_longwayx",
+  "platform": "Instagram",
+  "limit": 3
+}
+```
+
+### Response Body (`200 OK`)
+```json
+[
+  {
+    "post_id": "PST-THE_LO-01",
+    "caption": "Chasing horizons 🌅 A long way traveled, and many miles to go...",
+    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600",
+    "ocr_extracted_text": "Panoramic mountain trail photography / No suspicious overlay text detected",
+    "audio_track": "Acoustic Sunset - Indie Vibes (the_longwayx Original)",
+    "posted_date": "2 days ago",
+    "likes_count": 89,
+    "comments_count": 8,
+    "post_threat_flag": false,
+    "flagged_keywords": []
+  }
+]
+```
+*(Also automatically bundled inside the primary `POST /api/v1/scan` response as `recent_posts`!)*
+
+---
+
+## 7. OSINT Internet Surfing & Cross-Platform Footprint
+**Endpoint:** `POST /api/v1/osint/footprint`
+
+### Request Body (`application/json`)
+```json
+{
+  "query": "the_longwayx",
+  "protected_brand": "ByteXL"
+}
+```
+
+### Response Body (`200 OK`)
+```json
+[
+  {
+    "platform": "Instagram",
+    "handle_or_name": "@the_longwayx",
+    "url": "https://instagram.com/the_longwayx",
+    "status": "FOUND_ACTIVE",
+    "threat_level": "LOW",
+    "notes": "Active profile discovered on Instagram"
+  },
+  {
+    "platform": "Telegram",
+    "handle_or_name": "t.me/the_longwayx",
+    "url": "https://t.me/the_longwayx",
+    "status": "CLEAN_OR_UNAVAILABLE",
+    "threat_level": "NEUTRAL",
+    "notes": "No malicious phishing channels detected on Telegram for this alias"
+  },
+  {
+    "platform": "GitHub",
+    "handle_or_name": "the_longwayx",
+    "url": "https://github.com/the_longwayx",
+    "status": "FOUND_ACTIVE",
+    "threat_level": "LOW",
+    "notes": "Public code repositories or open source profile associated with username"
+  }
+]
+```
+*(Also automatically bundled inside the primary `POST /api/v1/scan` response as `cross_platform_footprint`!)*
+
+---
+
+## 8. App Store & Rogue Mobile App Forensics
+**Endpoint:** `POST /api/v1/scan/app-store`  
+*(Powered by Team COBALTS's 5-Pillar App Store Forensic Algorithm: AI synthetic reviews, astroturfing burst windows, publisher reverse OSINT, rating bimodal split, and hyperbolic cold-start detection)*
+
+### Request Body (`application/json`)
+```json
+{
+  "brand_name": "ByteXL",
+  "app_title": "ByteXL Placement Exam & Student Desk",
+  "package_id": "com.bytexl.placement.guide",
+  "publisher_name": "Apex Global Studio LLC",
+  "permissions_requested": [
+    "android.permission.INTERNET",
+    "android.permission.READ_SMS",
+    "android.permission.RECEIVE_SMS"
+  ]
+}
+```
+
+### Response Body (`200 OK`)
+```json
+{
+  "scan_id": "4A19F8C2",
+  "timestamp_utc": "2026-10-13 17:45:00 UTC",
+  "brand_name": "ByteXL",
+  "app_package_id": "com.bytexl.placement.guide",
+  "app_title": "ByteXL Placement Exam & Student Desk",
+  "publisher_name": "Apex Global Studio LLC",
+  "store": "Google Play",
+  "is_official_app": false,
+  "publisher_verified": false,
+  "publisher_mismatch_alert": "Rogue Publisher Impersonation: App published by unauthorized developer 'Apex Global Studio LLC' (Official publisher is 'ByteXL EdTech Pvt Ltd')",
+  "app_threat_index": 85.4,
+  "severity_level": "CRITICAL",
+  "severity_color": "#EF4444",
+  "review_forensics": {
+    "total_reviews_analyzed": 52,
+    "synthetic_bot_reviews_detected": 34,
+    "bot_probability_pct": 88.5,
+    "astroturfing_burst_detected": true,
+    "temporal_burst_window_hours": 24,
+    "rating_bimodal_split": {
+      "5_star": 35,
+      "4_star": 0,
+      "3_star": 0,
+      "2_star": 0,
+      "1_star": 17
+    },
+    "hyperbolic_praise_detected": true,
+    "flagged_review_snippets": [
+      "Bot Review [Cluster A]: 'This is the app I was looking for years for my whole life! This app have maken my life very easier by now. Best app in the world!!'",
+      "Real Victim Complaint [1-Star]: 'FRAUD APP! They asked for ₹500 placement registration fee claiming to be ByteXL...'"
+    ]
+  },
+  "publisher_portfolio": {
+    "publisher_name": "Apex Global Studio LLC",
+    "total_apps_in_portfolio": 4,
+    "average_app_lifespan_days": 18,
+    "reputation_status": "HIGH_RISK_EPHEMERAL_DEVELOPER_RING",
+    "cross_app_scam_flags": 4,
+    "portfolio_apps": [
+      {
+        "app_title": "ByteXL Placement Helper",
+        "package_id": "com.bytexl.placement.guide",
+        "status": "FLAGGED_IMPERSONATION"
+      },
+      {
+        "app_title": "Instant Loan Fast Cash Desk",
+        "package_id": "com.apex.fastloan.instant",
+        "status": "FLAGGED_MALWARE"
+      }
+    ]
+  },
+  "google_play_abuse_report": {
+    "case_id": "GP-STRIKE-4A19F8C2",
+    "policy_infringement_category": "Google Play Developer Program Policy - Impersonation (Section 1.3)"
+  }
+}
+```
+
+---
+
+## 9. Dynamic Brand Profile Management
+* **List All Brands:** `GET /api/v1/brands`
+* **Get Single Brand:** `GET /api/v1/brands/BRD-001` *(or `/api/v1/brands/bytexl`)*
+* **Register New Brand:** `POST /api/v1/brands`
+```json
+{
+  "brand_name": "Swiggy",
+  "official_handle": "@swiggy_official",
+  "official_domain": "swiggy.com",
+  "official_publisher": "Swiggy Logistics Pvt Ltd",
+  "official_mobile_apps": ["in.swiggy.android"],
+  "verified_followers": 980000
+}
+```

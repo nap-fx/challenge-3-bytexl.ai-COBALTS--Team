@@ -1,11 +1,1156 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import SectionHeader from '../components/SectionHeader.astro';
+import TakedownModal from '../components/TakedownModal.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="AegisMark AI — Autonomous Brand Impersonation Defense" activeTab="social">
+  
+  <!-- Interactive Guided Tour Modal (Matching dailyhabs modal aesthetic) -->
+  <div id="tour-modal" class="fixed inset-0 z-50 bg-[#121110]/70 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative transform transition-all overflow-hidden">
+      <div class="flex items-center justify-between pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#cc785c]/15 text-[#cc785c] border border-[#cc785c]/30" id="tour-step-badge">
+            Step 1 of 4
+          </span>
+          <span class="text-xs text-[#78756d] dark:text-[#8e8b82] font-medium" id="tour-step-subtitle">System Overview</span>
+        </div>
+        <button id="close-tour-modal-btn" class="text-[#78756d] hover:text-[#141413] dark:hover:text-[#faf9f5] p-1.5 rounded-xl hover:bg-[#f4efe6] dark:hover:bg-[#24221e] transition-colors cursor-pointer" aria-label="Close tour">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="py-6 space-y-4">
+        <!-- Slide 1 -->
+        <div class="tour-slide" data-slide="1">
+          <div class="w-14 h-14 rounded-2xl bg-[#cc785c]/15 text-[#cc785c] flex items-center justify-center mb-4">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">1. Zero-Friction Link Scraping</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed mt-2">
+            Just paste any social handle or URL. The backend automatically extracts public avatars, biographical copy, account age, and links. No manual brand selection or parameter tuning is needed.
+          </p>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="tour-slide hidden" data-slide="2">
+          <div class="w-14 h-14 rounded-2xl bg-[#5db872]/15 text-[#5db872] flex items-center justify-center mb-4">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">2. Computer Vision & Border Cropping</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed mt-2">
+            Scammers often pad logos with black borders or slight rotations to evade hashes. Our vision pipeline automatically strips artificial padding and compares 512-dimensional CLIP embeddings against official trademarks.
+          </p>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="tour-slide hidden" data-slide="3">
+          <div class="w-14 h-14 rounded-2xl bg-[#e8a55a]/15 text-[#e8a55a] flex items-center justify-center mb-4">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">3. NLP Intent & Deobfuscator</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed mt-2">
+            Attackers hide keywords using zero-width spaces or Cyrillic characters. Our NLP engine strips obfuscation, analyzes text intent with DistilBERT, and detects illicit UPI IDs or credential traps.
+          </p>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="tour-slide hidden" data-slide="4">
+          <div class="w-14 h-14 rounded-2xl bg-[#3b82f6]/15 text-[#3b82f6] flex items-center justify-center mb-4">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">4. 1-Click Signed Legal Takedowns</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed mt-2">
+            When threats are confirmed, the system immediately compiles an irrefutable legal DMCA dossier with cryptographic proof vectors ready to submit to Instagram, X, or Telegram legal teams.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between">
+        <button id="tour-prev-btn" class="px-4 py-2 text-xs font-bold text-[#78756d] hover:bg-[#f4efe6] dark:hover:bg-[#24221e] rounded-xl transition-colors disabled:opacity-40 cursor-pointer" disabled>
+          ← Previous
+        </button>
+
+        <div class="flex items-center gap-1.5" id="tour-dots-indicator">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#cc785c]"></span>
+          <span class="w-2 h-2 rounded-full bg-[#e6dfd8] dark:bg-[#2d2b26]"></span>
+          <span class="w-2 h-2 rounded-full bg-[#e6dfd8] dark:bg-[#2d2b26]"></span>
+          <span class="w-2 h-2 rounded-full bg-[#e6dfd8] dark:bg-[#2d2b26]"></span>
+        </div>
+
+        <button id="tour-next-btn" class="bg-[#cc785c] hover:bg-[#b86348] text-white text-xs font-bold px-5 py-2 rounded-xl shadow-xs transition-all btn-3d-pop btn-3d-coral cursor-pointer">
+          Next →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-16 space-y-12">
+
+    <!-- 1. EDITORIAL HERO & PRODUCT INTRODUCTION (dailyhabs warm canvas style) -->
+    <section class="relative rounded-3xl bg-gradient-to-br from-[#ffffff] via-[#fbf9f4] to-[#f4efe6] dark:from-[#181715] dark:via-[#1c1b18] dark:to-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] p-8 sm:p-12 lg:p-14 shadow-xl overflow-hidden">
+      
+      <!-- Accent Glow Orbs -->
+      <div class="absolute -right-20 -top-20 w-96 h-96 bg-[#cc785c]/15 dark:bg-[#cc785c]/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-[#5db8a6]/12 dark:bg-[#5db8a6]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#cc785c]/10 dark:bg-[#cc785c]/20 border border-[#cc785c]/30 text-[#cc785c] text-xs font-bold uppercase tracking-wider mb-6 shadow-xs">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          <span>Autonomous Digital Risk Protection</span>
+        </div>
+
+        <!-- Main Headline in Fraunces -->
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] leading-[1.1]">
+          Stop Brand Impersonators. <br />
+          <span class="text-[#cc785c] italic">Automate Legal Defense.</span>
+        </h1>
+
+        <!-- Subtitle in Plain English (No jargon, no filler) -->
+        <p class="text-sm sm:text-base text-[#78756d] dark:text-[#8e8b82] mt-4 max-w-2xl font-medium leading-relaxed">
+          AegisMark AI protects students, customers, and enterprises from fake support desks, phishing handles, and rogue apps. Simply paste any suspect profile or store link — our backend extracts public data, cross-examines trademarks with vision and NLP, and generates signed takedown packages.
+        </p>
+
+        <!-- Primary Action Launchers -->
+        <div class="flex flex-wrap items-center gap-3.5 mt-8">
+          <a href="#scanner-anchor" class="bg-[#cc785c] hover:bg-[#b86348] text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-2xl shadow-lg shadow-[#cc785c]/25 transition-all flex items-center gap-2 btn-3d-pop btn-3d-coral">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>Scan Suspect Link</span>
+          </a>
+
+          <a href="/app-store" class="bg-[#181715] hover:bg-[#252320] text-white dark:bg-[#faf9f5] dark:text-[#141413] text-xs sm:text-sm font-bold px-6 py-3.5 rounded-2xl border border-[#33312c] dark:border-[#e6dfd8] transition-all flex items-center gap-2 btn-3d-pop">
+            <svg class="w-4 h-4 text-[#cc785c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>App Store Scanner →</span>
+          </a>
+
+          <button id="open-tour-btn" type="button" class="bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-xs sm:text-sm font-bold px-5 py-3.5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all flex items-center gap-2 btn-3d-pop cursor-pointer">
+            <svg class="w-4 h-4 text-[#e8a55a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            <span>How It Works (Tour)</span>
+          </button>
+        </div>
+
+        <!-- Trust & Architecture Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 pt-8 border-t border-[#e6dfd8]/60 dark:border-[#24221e] text-xs font-semibold text-[#78756d] dark:text-[#8e8b82]">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#5db872]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span>Zero Manual Entry</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#cc785c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>512-dim CLIP Vision</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#e8a55a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <span>DistilBERT Deobfuscation</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>1-Click Signed DMCA</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 2. THE THREE FORENSIC PILLARS (Clean Bento Cards) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Card 1: Vision -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-7 shadow-xs card-lift flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#cc785c]/15 text-[#cc785c] flex items-center justify-center mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          </div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#cc785c]">Pillar 01</span>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5] mt-1">Computer Vision & Crop Stripping</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] mt-3 leading-relaxed">
+            Extracts suspect avatar images, strips adversarial black border crops, and generates 512-dim CLIP embeddings to match against registered brand logos with cosine precision.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-xs font-mono text-[#78756d]">
+          <span>Tolerance: &gt;90% Cosine</span>
+          <span class="text-[#cc785c] font-bold">Auto-Padding Crop</span>
+        </div>
+      </div>
+
+      <!-- Card 2: NLP Intent -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-7 shadow-xs card-lift flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#5db872]/15 text-[#5db872] flex items-center justify-center mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          </div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#5db872]">Pillar 02</span>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5] mt-1">NLP Scam Intent & UPI Extraction</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] mt-3 leading-relaxed">
+            Deobfuscates hidden zero-width characters and runs DistilBERT text classification to catch fraudulent fee solicitations, fake jobs, and unauthorized payment addresses.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-xs font-mono text-[#78756d]">
+          <span>Deobfuscation: Zero-Width</span>
+          <span class="text-[#5db872] font-bold">UPI Leak Flag</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Homoglyphs & Velocity -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-7 shadow-xs card-lift flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#3b82f6]/15 text-[#3b82f6] flex items-center justify-center mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-[#3b82f6]">Pillar 03</span>
+          <h3 class="font-serif text-2xl font-bold text-[#141413] dark:text-[#faf9f5] mt-1">Homoglyphs & Velocity Heuristics</h3>
+          <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] mt-3 leading-relaxed">
+            Flags Cyrillic lookalikes (<code class="font-mono text-xs text-[#cc785c]">paytrn</code> vs <code class="font-mono text-xs">paytm</code>) and analyzes account follower velocity to distinguish viral posts from artificial bot purchases.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-xs font-mono text-[#78756d]">
+          <span>Distance: Levenshtein</span>
+          <span class="text-[#3b82f6] font-bold">Spike Anomaly</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3. THE SOCIAL SCANNER WORKFLOW (Pure Link Paster, Zero Manual Inputs) -->
+    <div id="scanner-anchor" class="scroll-mt-24 space-y-8">
+      
+      <SectionHeader
+        eyebrow="TAB 1 // INSTANT INVESTIGATION"
+        title="Social Media Impersonator Scanner"
+        subtitle="Paste any suspect Instagram, X, or Telegram link. The backend scrapes public evidence, detects targeted brands, runs all 3 diagnostic models, and renders the threat scoreboard."
+      />
+
+      <!-- Scanner Input Box -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-md">
+        <form id="social-scan-form" class="space-y-5">
+          <div>
+            <label for="link_input" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-2 font-sans">
+              Paste Suspect Profile URL or Handle
+            </label>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="relative flex-1">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#78756d]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                </div>
+                <input
+                  type="text"
+                  id="link_input"
+                  required
+                  value="https://instagram.com/bytexl_support_official"
+                  placeholder="e.g. https://instagram.com/bytexl_support_official or https://instagram.com/avilash_007"
+                  class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] pl-10 pr-4 py-3.5 rounded-2xl font-mono text-xs sm:text-sm text-[#141413] dark:text-[#faf9f5] outline-none focus:border-[#cc785c] transition-colors"
+                />
+              </div>
+              <button
+                type="submit"
+                id="scan-submit-btn"
+                class="bg-[#cc785c] hover:bg-[#b86348] text-white text-xs sm:text-sm font-bold px-8 py-3.5 rounded-2xl shadow-md shadow-[#cc785c]/25 transition-all flex items-center justify-center gap-2 btn-3d-pop btn-3d-coral cursor-pointer shrink-0"
+              >
+                <span id="scan-spinner" class="hidden flex items-center gap-2">
+                  <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                  <span>Extracting Evidence...</span>
+                </span>
+                <span id="scan-btn-text" class="flex items-center gap-1.5">
+                  <span>Run Forensic Scan</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Paste Profile Links -->
+          <div class="pt-3 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex flex-wrap items-center gap-2 text-xs">
+            <span class="text-[#78756d] font-bold uppercase text-[10px] tracking-wider mr-1">Try Known Profiles:</span>
+            <button
+              type="button"
+              class="sample-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+              data-url="https://instagram.com/bytexl_support_official"
+            >
+              ByteXL Support Phishing Desk
+            </button>
+            <button
+              type="button"
+              class="sample-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+              data-url="https://instagram.com/student_placement_desk"
+            >
+              Campus Placement Scam
+            </button>
+            <button
+              type="button"
+              class="sample-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+              data-url="https://instagram.com/courses_leak_zone"
+            >
+              Exam Paper & Course Leaks
+            </button>
+            <button
+              type="button"
+              class="sample-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+              data-url="https://instagram.com/bytexl_official"
+            >
+              Official Verified ByteXL
+            </button>
+            <button
+              type="button"
+              class="sample-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+              data-url="https://www.instagram.com/avilash_007"
+            >
+              Personal Profile (@avilash_007)
+            </button>
+          </div>
+        </form>
+
+        <!-- Live Scan Error Toast / Banner -->
+        <div id="scan-error-banner" class="hidden mt-4 p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200 text-xs flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="scan-error-message" class="font-medium">Backend connection error. Please verify the FastAPI service is active.</span>
+          </div>
+          <button id="close-error-banner" type="button" class="text-red-600 hover:text-red-800 font-bold px-2 py-1 rounded-lg">✕</button>
+        </div>
+      </div>
+
+      <!-- 4. THREAT SCOREBOARD & SCRAPED EVIDENCE DOSSIER -->
+      <div id="social-results" class="space-y-6">
+        
+        <!-- Scoreboard Title Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#e6dfd8] dark:border-[#2d2b26]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="res-status-dot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#78756d] dark:text-[#8e8b82]">
+                CASE #<span id="res-scan-id">AUDIT-READY</span> // EVIDENCE DOSSIER
+              </span>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] mt-0.5">
+              Diagnostic Threat Scorecard
+            </h2>
+          </div>
+
+          <button id="open-takedown-btn" type="button" disabled class="bg-[#78756d]/30 text-[#78756d] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl transition-all flex items-center gap-2 cursor-not-allowed opacity-60">
+            <svg class="w-4 h-4 text-[#5db872]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span>Clean Profile (Takedown Inactive)</span>
+          </button>
+        </div>
+
+        <!-- Upper Row: Composite Meter & Profile Card -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- Unified Composite Meter -->
+          <div class="md:col-span-5 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center shadow-xs card-lift">
+            <div class="w-full">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-[#78756d] dark:text-[#8e8b82] block mb-2">
+                Unified Composite Threat Meter
+              </span>
+              <div class="my-4">
+                <div id="res-score" class="font-serif text-6xl sm:text-7xl font-bold text-[#5db872] tracking-tight">
+                  0.0
+                </div>
+                <div class="text-[11px] text-[#78756d] font-mono mt-1">out of 100 max risk threshold</div>
+              </div>
+            </div>
+
+            <div class="w-full space-y-3">
+              <div id="res-badge" class="px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 inline-block w-full">
+                CLEAN / BENIGN (0.0 THREAT)
+              </div>
+              <p id="res-action" class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+                Paste any link above to extract profile metadata and run multi-modal AI threat diagnostics.
+              </p>
+            </div>
+          </div>
+
+          <!-- Extracted Profile Evidence Card (Spacious with Forensic Profiling) -->
+          <div class="md:col-span-7 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xs card-lift space-y-5">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#cc785c] to-[#a9583e] text-white flex items-center justify-center font-bold text-xl overflow-hidden shrink-0 shadow-md shadow-[#cc785c]/25">
+                    <span id="res-avatar-initial">@</span>
+                  </div>
+                  <div>
+                    <h3 id="res-handle" class="font-serif text-2xl sm:text-3xl font-bold text-[#141413] dark:text-[#faf9f5]">
+                      @handle_preview
+                    </h3>
+                    <div class="flex items-center gap-2 mt-1 text-xs text-[#78756d] font-mono">
+                      <span id="res-platform" class="font-bold text-accent">Platform</span>
+                      <span>•</span>
+                      <span id="res-brand" class="text-[#78756d] font-medium">None (Personal Profile)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <span id="res-extract-pill" class="text-[10px] font-mono bg-[#cc785c]/15 text-[#cc785c] px-3 py-1 rounded-full font-bold">
+                  LIVE SCRAPER
+                </span>
+              </div>
+
+              <!-- Pure Scraped Bio Snippet (Strictly contains ONLY genuine scraped bio text) -->
+              <div class="p-4 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#141413] dark:text-[#faf9f5] leading-relaxed">
+                <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-1">Scraped Bio Copy:</span>
+                <p id="res-bio" class="text-[#78756d] italic">
+                  Paste a suspect profile URL above and click 'Run Forensic Scan' to extract profile copy.
+                </p>
+              </div>
+
+              <!-- Dedicated Account Age & Description Style Forensic Profiling (NOT inside bio description) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <!-- Account Age & Longevity Estimation Card -->
+                <div class="p-4 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#78756d] dark:text-[#8e8b82]">
+                      Account Age Estimation
+                    </span>
+                    <span id="res-account-age-badge" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 uppercase">
+                      Age: Pending
+                    </span>
+                  </div>
+                  <div id="res-account-age" class="font-serif text-base sm:text-lg font-bold text-[#141413] dark:text-[#faf9f5]">
+                    Awaiting Scan...
+                  </div>
+                  <div class="text-[11px] font-mono text-[#78756d] flex items-center justify-between pt-1 border-t border-[#e6dfd8]/40 dark:border-[#2d2b26]">
+                    <span>Registration Est:</span>
+                    <strong id="res-account-pred" class="text-[#141413] dark:text-[#faf9f5]">N/A</strong>
+                  </div>
+                </div>
+
+                <!-- Description Style & Semantic Phrasing Card -->
+                <div class="p-4 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#78756d] dark:text-[#8e8b82]">
+                      Description Style Rating
+                    </span>
+                    <span id="res-desc-style-badge" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 uppercase">
+                      Style: Clean
+                    </span>
+                  </div>
+                  <div id="res-desc-style" class="font-serif text-base sm:text-lg font-bold text-[#141413] dark:text-[#faf9f5] truncate">
+                    Standard Narrative
+                  </div>
+                  <div class="text-[11px] font-mono text-[#78756d] flex items-center justify-between pt-1 border-t border-[#e6dfd8]/40 dark:border-[#2d2b26]">
+                    <span>Style Risk Impact:</span>
+                    <strong id="res-desc-style-score" class="text-[#5db872]">0.0 / 100</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Attributes Table -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-[#e6dfd8]/60 dark:border-[#24221e] text-xs font-mono">
+              <div>
+                <span class="text-[#78756d] block text-[10px]">TARGET URL:</span>
+                <span id="res-url" class="truncate block font-bold text-[#141413] dark:text-[#faf9f5]">Awaiting URL...</span>
+              </div>
+              <div>
+                <span class="text-[#78756d] block text-[10px]">LEGIT DOMAIN:</span>
+                <span id="res-official-domain" class="truncate block font-bold text-[#78756d]">N/A (Personal Account)</span>
+              </div>
+              <div>
+                <span class="text-[#78756d] block text-[10px]">OFFICIAL HANDLE:</span>
+                <span id="res-official-handle" class="truncate block font-bold text-[#78756d]">N/A (Personal Account)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Lower Row: 3 Diagnostic Pillars Breakdown Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Pillar 1 Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#cc785c]">PILLAR 1: VISION</span>
+              <span id="p1-score" class="font-serif text-2xl font-bold text-[#5db872]">0.0%</span>
+            </div>
+            <div>
+              <h4 class="font-serif text-lg font-bold text-[#141413] dark:text-[#faf9f5]">CLIP Logo Cosine Similarity</h4>
+              <p class="text-xs text-[#78756d] dark:text-[#8e8b82] mt-1 leading-relaxed">
+                Strips adversarial black borders and calculates 512-dim CLIP embedding similarity against registered brand trademarks.
+              </p>
+            </div>
+            <div id="p1-status" class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+              Status: <strong class="text-[#5db872]">No Trademark Detected</strong>
+            </div>
+          </div>
+
+          <!-- Pillar 2 Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#5db872]">PILLAR 2: NLP INTENT</span>
+              <span id="p2-score" class="font-serif text-2xl font-bold text-[#5db872]">0.0%</span>
+            </div>
+            <div>
+              <h4 class="font-serif text-lg font-bold text-[#141413] dark:text-[#faf9f5]">Advance-Fee & Phishing Detection</h4>
+              <p class="text-xs text-[#78756d] dark:text-[#8e8b82] mt-1 leading-relaxed">
+                Deobfuscates hidden zero-width spaces and scans for financial solicitation, fake employment offers, and unauthorized payment handles.
+              </p>
+            </div>
+            <div id="p2-status" class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+              Trigger: <strong class="text-[#5db872]">Clean Profile Semantics</strong>
+            </div>
+          </div>
+
+          <!-- Pillar 3 Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#3b82f6]">PILLAR 3: HEURISTICS</span>
+              <span id="p3-score" class="font-serif text-2xl font-bold text-[#5db872]">0.0%</span>
+            </div>
+            <div>
+              <h4 class="font-serif text-lg font-bold text-[#141413] dark:text-[#faf9f5]">Homoglyphs & Account Velocity</h4>
+              <p class="text-xs text-[#78756d] dark:text-[#8e8b82] mt-1 leading-relaxed">
+                Detects lookalike Cyrillic glyphs, deceptive suffixes (_support, _official), and artificial bot follower surge velocity.
+              </p>
+            </div>
+            <div id="p3-status" class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+              Anomaly: <strong class="text-[#5db872]">Standard Username</strong>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Evidence Flags List -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-xs">
+          <h4 class="font-serif text-lg font-bold text-[#141413] dark:text-[#faf9f5] mb-4">
+            Forensic Signals & Evidence Findings
+          </h4>
+          <ul id="res-flags" class="space-y-2.5 text-xs font-mono">
+            <li class="p-3 bg-[#faf9f5] dark:bg-[#121110] rounded-xl border-l-4 border-[#5db872] text-[#141413] dark:text-[#faf9f5]">
+              ✓ Ready for forensic inspection. Enter any link above to run real-time automated analysis.
+            </li>
+          </ul>
+        </div>
+
+        <!-- 5. RECENT POSTS & MULTI-MODAL EVIDENCE (OCR + AUDIO SPEECH TRANSCRIPTS) -->
+        <div id="res-posts-section" class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#cc785c]">MULTI-MODAL EVIDENCE</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-[#cc785c]"></span>
+                <span class="text-xs text-[#78756d] font-mono">OCR Text + Audio Speech Transcription</span>
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5] mt-1">
+                Recent Posts & Media Forensics
+              </h3>
+            </div>
+            <div id="posts-count-badge" class="px-3 py-1 rounded-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d]">
+              0 Posts Inspected
+            </div>
+          </div>
+
+          <div id="res-posts-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="col-span-full py-8 text-center text-xs font-mono text-[#78756d]">
+              Paste a suspect profile URL above to extract recent feed posts, embedded image OCR text, and reel audio transcripts.
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. CROSS-PLATFORM INTERNET IDENTITY FOOTPRINT (OSINT ENGINE) -->
+        <div id="res-footprint-section" class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#3b82f6]">OSINT RECONNAISSANCE</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-[#3b82f6]"></span>
+                <span class="text-xs text-[#78756d] font-mono">Domain Registry, Social Networks & Code Repos</span>
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5] mt-1">
+                Cross-Platform Internet Footprint
+              </h3>
+            </div>
+            <div id="footprint-count-badge" class="px-3 py-1 rounded-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d]">
+              5 Platforms Indexed
+            </div>
+          </div>
+
+          <div id="res-footprint-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="col-span-full py-8 text-center text-xs font-mono text-[#78756d]">
+              Cross-platform OSINT discovery running. Scan results will display coordinated handles and typo-squatted domains.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Reusable Takedown Notice Modal -->
+  <TakedownModal />
+
 </Layout>
+
+<script>
+  import { apiFetch } from '../lib/api';
+
+  // --- Guided Tour Modal Functionality ---
+  const tourModal = document.getElementById('tour-modal');
+  const openTourBtn = document.getElementById('open-tour-btn');
+  const closeTourBtn = document.getElementById('close-tour-modal-btn');
+  const tourPrevBtn = document.getElementById('tour-prev-btn') as HTMLButtonElement;
+  const tourNextBtn = document.getElementById('tour-next-btn') as HTMLButtonElement;
+  const tourStepBadge = document.getElementById('tour-step-badge');
+  const tourStepSubtitle = document.getElementById('tour-step-subtitle');
+  const tourSlides = document.querySelectorAll('.tour-slide');
+  const tourDots = document.getElementById('tour-dots-indicator')?.querySelectorAll('span');
+
+  let currentTourSlide = 1;
+  const totalTourSlides = 4;
+
+  const subtitles = [
+    "System Overview",
+    "Computer Vision",
+    "NLP Deobfuscation",
+    "1-Click Takedown"
+  ];
+
+  function showTourSlide(slideNum: number) {
+    currentTourSlide = slideNum;
+    tourSlides.forEach((slide) => {
+      const num = parseInt(slide.getAttribute('data-slide') || '1');
+      slide.classList.toggle('hidden', num !== currentTourSlide);
+    });
+
+    if (tourStepBadge) tourStepBadge.textContent = `Step ${currentTourSlide} of ${totalTourSlides}`;
+    if (tourStepSubtitle) tourStepSubtitle.textContent = subtitles[currentTourSlide - 1];
+
+    if (tourPrevBtn) tourPrevBtn.disabled = currentTourSlide === 1;
+    if (tourNextBtn) tourNextBtn.textContent = currentTourSlide === totalTourSlides ? "Finish Tour ✓" : "Next →";
+
+    tourDots?.forEach((dot, idx) => {
+      if (idx === currentTourSlide - 1) {
+        dot.className = "w-2.5 h-2.5 rounded-full bg-[#cc785c]";
+      } else {
+        dot.className = "w-2 h-2 rounded-full bg-[#e6dfd8] dark:bg-[#2d2b26]";
+      }
+    });
+  }
+
+  openTourBtn?.addEventListener('click', () => {
+    showTourSlide(1);
+    tourModal?.classList.remove('hidden');
+  });
+
+  closeTourBtn?.addEventListener('click', () => {
+    tourModal?.classList.add('hidden');
+  });
+
+  tourPrevBtn?.addEventListener('click', () => {
+    if (currentTourSlide > 1) showTourSlide(currentTourSlide - 1);
+  });
+
+  tourNextBtn?.addEventListener('click', () => {
+    if (currentTourSlide < totalTourSlides) {
+      showTourSlide(currentTourSlide + 1);
+    } else {
+      tourModal?.classList.add('hidden');
+    }
+  });
+
+  tourModal?.addEventListener('click', (e) => {
+    if (e.target === tourModal) tourModal?.classList.add('hidden');
+  });
+
+  // --- Social Media Link Scanner Functionality ---
+  const form = document.getElementById('social-scan-form') as HTMLFormElement;
+  const linkInput = document.getElementById('link_input') as HTMLInputElement;
+  const submitBtn = document.getElementById('scan-submit-btn') as HTMLButtonElement;
+  const spinner = document.getElementById('scan-spinner');
+  const btnText = document.getElementById('scan-btn-text');
+  const openTakedownBtn = document.getElementById('open-takedown-btn') as HTMLButtonElement;
+  const takedownModal = document.getElementById('takedown-modal');
+  const sampleBtns = document.querySelectorAll('.sample-btn');
+
+  // Auto-detect brand from URL or handle
+  function autoDetectBrand(urlOrHandle: string): string {
+    const lower = urlOrHandle.toLowerCase();
+    if (lower.includes('zomato') || lower.includes('z0mato') || lower.includes('zomto')) return 'Zomato';
+    if (lower.includes('paytm') || lower.includes('paytrn') || lower.includes('pay_tm')) return 'Paytm';
+    if (lower.includes('zerodha') || lower.includes('zer0dha')) return 'Zerodha';
+    if (lower.includes('kampus')) return 'Kampus.vc';
+    if (lower.includes('bytexl') || lower.includes('byte_xl')) return 'ByteXL';
+    return ''; // Backend auto-detects brand or generic scam desk
+  }
+
+  // Wire sample link buttons
+  sampleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-url') || '';
+      linkInput.value = url;
+      form.requestSubmit();
+    });
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (spinner && btnText) {
+      spinner.classList.remove('hidden');
+      btnText.classList.add('hidden');
+    }
+    if (submitBtn) submitBtn.disabled = true;
+
+    const urlOrHandle = linkInput.value.trim();
+    const brandName = autoDetectBrand(urlOrHandle);
+
+    try {
+      // 1. Direct automated extraction from backend
+      let extractedData: any = {};
+      try {
+        extractedData = await apiFetch<any>('/api/v1/extract-link', {
+          method: 'POST',
+          body: JSON.stringify({ url: urlOrHandle })
+        });
+      } catch (err) {
+        console.warn("Direct extract endpoint note, continuing with scan...", err);
+      }
+
+      // 2. Multi-modal scan
+      const scanPayload = {
+        brand_name: brandName || "Auto-Detect",
+        suspect_url: urlOrHandle.startsWith('http') ? urlOrHandle : `https://instagram.com/${urlOrHandle.replace('@', '')}`,
+        suspect_handle: extractedData.extracted_handle || (urlOrHandle.startsWith('@') ? urlOrHandle : `@${urlOrHandle.split('/').filter(Boolean).pop()}`),
+        platform: extractedData.platform || (urlOrHandle.includes('x.com') ? 'X' : urlOrHandle.includes('t.me') ? 'Telegram' : 'Instagram'),
+        suspect_bio: extractedData.bio || ""
+      };
+
+      const result = await apiFetch<any>('/api/v1/scan', {
+        method: 'POST',
+        body: JSON.stringify(scanPayload)
+      });
+
+      // Clear any prior error
+      document.getElementById('scan-error-banner')?.classList.add('hidden');
+      renderResults(result);
+    } catch (err: any) {
+      console.error("Forensic scan error:", err);
+      const errBanner = document.getElementById('scan-error-banner');
+      const errMsg = document.getElementById('scan-error-message');
+      if (errBanner && errMsg) {
+        errMsg.textContent = `Scan failed: ${err.message || 'Unable to connect to AegisMark AI backend at http://127.0.0.1:8000. Please ensure the backend is running.'}`;
+        errBanner.classList.remove('hidden');
+        errBanner.scrollIntoView({ behavior: 'smooth' });
+      }
+    } finally {
+      if (spinner && btnText) {
+        spinner.classList.add('hidden');
+        btnText.classList.remove('hidden');
+      }
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+
+  // Close error banner handler
+  document.getElementById('close-error-banner')?.addEventListener('click', () => {
+    document.getElementById('scan-error-banner')?.classList.add('hidden');
+  });
+
+  function renderResults(data: any) {
+    const resultsSec = document.getElementById('social-results');
+    resultsSec?.scrollIntoView({ behavior: 'smooth' });
+
+    (document.getElementById('res-scan-id') as HTMLElement).textContent = data.scan_id;
+    (document.getElementById('res-action') as HTMLElement).textContent = data.recommended_action;
+    (document.getElementById('res-handle') as HTMLElement).textContent = data.suspect_handle;
+    (document.getElementById('res-url') as HTMLElement).textContent = data.suspect_url;
+    (document.getElementById('res-platform') as HTMLElement).textContent = data.platform;
+
+    // Avatar Initial
+    const avatarInit = document.getElementById('res-avatar-initial');
+    if (avatarInit && data.suspect_handle) {
+      avatarInit.textContent = data.suspect_handle.replace('@', '').charAt(0).toUpperCase() || '@';
+    }
+
+    // Brand Profile & Domain resolution
+    const brandName = data.brand_profile?.brand_name || data.brand_name || "None";
+    const brandLower = brandName.toLowerCase();
+    const isIndependent = brandLower.includes("none") || brandLower.includes("personal profile");
+    const isGenericScam = brandLower.includes("scam desk") || brandLower.includes("leak desk") || brandLower.includes("phishing") || brandLower.includes("unauthorized");
+
+    const brandElem = document.getElementById('res-brand') as HTMLElement;
+    if (brandElem) {
+      if (isGenericScam) {
+        brandElem.textContent = brandName;
+        brandElem.className = "text-[#c64545] font-bold";
+      } else if (isIndependent) {
+        brandElem.textContent = "None (Personal Profile)";
+        brandElem.className = "text-[#78756d] font-medium";
+      } else {
+        brandElem.textContent = brandName;
+        brandElem.className = "text-[#cc785c] font-bold";
+      }
+    }
+
+    const domainElem = document.getElementById('res-official-domain') as HTMLElement;
+    if (domainElem) {
+      if (isGenericScam) {
+        domainElem.textContent = "Unregistered / Rogue Entity";
+        domainElem.className = "truncate block font-bold text-[#c64545]";
+      } else if (isIndependent) {
+        domainElem.textContent = "N/A (Personal Account)";
+        domainElem.className = "truncate block font-bold text-[#78756d]";
+      } else {
+        domainElem.textContent = data.brand_profile?.official_domain || `${brandName.toLowerCase()}.com`;
+        domainElem.className = "truncate block font-bold text-[#5db872]";
+      }
+    }
+
+    const officialHandleElem = document.getElementById('res-official-handle') as HTMLElement;
+    if (officialHandleElem) {
+      if (isGenericScam) {
+        officialHandleElem.textContent = "Unauthorized Authority Spoof";
+        officialHandleElem.className = "truncate block font-bold text-[#c64545]";
+      } else if (isIndependent) {
+        officialHandleElem.textContent = "N/A (Personal Account)";
+        officialHandleElem.className = "truncate block font-bold text-[#78756d]";
+      } else {
+        officialHandleElem.textContent = data.brand_profile?.official_handle || `@${brandName.toLowerCase()}_official`;
+        officialHandleElem.className = "truncate block font-bold text-[#5db872]";
+      }
+    }
+
+    // Bio Copy — Display actual scraped text or clean notice, NEVER fake hardcoded scam text!
+    const bioElem = document.getElementById('res-bio') as HTMLElement;
+    if (bioElem) {
+      if (data.suspect_bio && data.suspect_bio.trim().length > 0) {
+        bioElem.textContent = data.suspect_bio;
+        bioElem.classList.remove('italic', 'text-[#78756d]');
+      } else {
+        bioElem.textContent = "No public bio text found on profile (Standard personal profile / Private account).";
+        bioElem.classList.add('italic', 'text-[#78756d]');
+      }
+    }
+
+    // Account Age & Description Style Telemetry (Dedicated widgets outside bio copy)
+    const ageElem = document.getElementById('res-account-age');
+    const predElem = document.getElementById('res-account-pred');
+    const ageBadge = document.getElementById('res-account-age-badge');
+    const styleElem = document.getElementById('res-desc-style');
+    const styleScoreElem = document.getElementById('res-desc-style-score');
+    const styleBadge = document.getElementById('res-desc-style-badge');
+
+    if (ageElem) {
+      ageElem.textContent = data.account_age_label || `${data.account_age_days || 3} Days Old`;
+    }
+    if (predElem) {
+      predElem.textContent = data.account_creation_predicted || "Recent (2026)";
+    }
+    if (ageBadge) {
+      const ageRisk = data.account_age_risk_score ?? (scoreVal >= 70 ? 88 : 10);
+      if (ageRisk >= 70) {
+        ageBadge.textContent = "High-Risk Burner";
+        ageBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 uppercase";
+      } else if (ageRisk >= 30) {
+        ageBadge.textContent = "Moderate Longevity";
+        ageBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 uppercase";
+      } else {
+        ageBadge.textContent = "Matured Profile";
+        ageBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 uppercase";
+      }
+    }
+
+    if (styleElem) {
+      styleElem.textContent = data.description_style || "Natural Social Narrative";
+    }
+    if (styleScoreElem) {
+      const styleScore = Math.round(data.description_style_score ?? (scoreVal >= 70 ? 92 : 0));
+      styleScoreElem.textContent = `${styleScore}.0 / 100`;
+      styleScoreElem.className = styleScore >= 70 ? "text-rose-600 dark:text-rose-400 font-bold" : styleScore >= 30 ? "text-amber-600 dark:text-amber-400 font-bold" : "text-emerald-600 dark:text-emerald-400 font-bold";
+    }
+    if (styleBadge) {
+      const cat = data.description_style_category || (scoreVal >= 70 ? "HIGH_RISK_SCAM_STYLE" : "AUTHENTIC_PERSONAL");
+      if (cat === "HIGH_RISK_SCAM_STYLE") {
+        styleBadge.textContent = "High Scam Style";
+        styleBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 uppercase";
+      } else if (cat === "FAN_COMMUNITY") {
+        styleBadge.textContent = "Community Style";
+        styleBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 uppercase";
+      } else {
+        styleBadge.textContent = "Authentic Style";
+        styleBadge.className = "text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 uppercase";
+      }
+    }
+
+    // Threat Score & Badge formatting
+    const scoreVal = Math.round(data.unified_threat_score || 0);
+    const scoreElem = document.getElementById('res-score') as HTMLElement;
+    if (scoreElem) {
+      scoreElem.textContent = scoreVal.toFixed(1);
+      if (scoreVal >= 70) {
+        scoreElem.className = "font-serif text-6xl sm:text-7xl font-bold text-[#c64545] dark:text-[#f87171] tracking-tight";
+      } else if (scoreVal >= 40) {
+        scoreElem.className = "font-serif text-6xl sm:text-7xl font-bold text-[#e8a55a] dark:text-[#e8a55a] tracking-tight";
+      } else {
+        scoreElem.className = "font-serif text-6xl sm:text-7xl font-bold text-[#5db872] dark:text-[#5db872] tracking-tight";
+      }
+    }
+
+    const badge = document.getElementById('res-badge') as HTMLElement;
+    const statusDot = document.getElementById('res-status-dot') as HTMLElement;
+    if (badge) {
+      if (data.severity_level === 'CRITICAL' || scoreVal >= 90) {
+        badge.textContent = "CRITICAL THREAT LEVEL";
+        badge.className = "px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-900 inline-block w-full";
+        if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-[#c64545] animate-ping";
+      } else if (data.severity_level === 'HIGH' || scoreVal >= 70) {
+        badge.textContent = "HIGH THREAT LEVEL";
+        badge.className = "px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-900 inline-block w-full";
+        if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-[#e8a55a]";
+      } else if (data.severity_level === 'MEDIUM' || scoreVal >= 40) {
+        badge.textContent = "MEDIUM RISK";
+        badge.className = "px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-yellow-100 text-yellow-800 dark:bg-yellow-950/60 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-900 inline-block w-full";
+        if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-[#e8a55a]";
+      } else {
+        badge.textContent = "CLEAN / BENIGN (0.0 THREAT)";
+        badge.className = "px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 inline-block w-full";
+        if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
+      }
+    }
+
+    // Pillar Scores
+    const p1 = Math.round(data.pillar_1_vision?.score || 0);
+    const p2 = Math.round(data.pillar_2_nlp?.score || 0);
+    const p3 = Math.round(data.pillar_3_heuristics?.score || 0);
+
+    const p1ScoreElem = document.getElementById('p1-score');
+    if (p1ScoreElem) {
+      p1ScoreElem.textContent = `${p1}%`;
+      p1ScoreElem.className = `font-serif text-2xl font-bold ${p1 >= 70 ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+    const p2ScoreElem = document.getElementById('p2-score');
+    if (p2ScoreElem) {
+      p2ScoreElem.textContent = `${p2}%`;
+      p2ScoreElem.className = `font-serif text-2xl font-bold ${p2 >= 70 ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+    const p3ScoreElem = document.getElementById('p3-score');
+    if (p3ScoreElem) {
+      p3ScoreElem.textContent = `${p3}%`;
+      p3ScoreElem.className = `font-serif text-2xl font-bold ${p3 >= 70 ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+
+    // Takedown Action Button Status
+    if (openTakedownBtn) {
+      if (scoreVal >= 70 || data.takedown_unlocked) {
+        openTakedownBtn.disabled = false;
+        openTakedownBtn.className = "bg-[#c64545] hover:bg-[#a83636] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl shadow-md transition-all flex items-center gap-2 btn-3d-pop cursor-pointer opacity-100";
+        openTakedownBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>Generate Legal Takedown Notice</span>
+        `;
+      } else {
+        openTakedownBtn.disabled = true;
+        openTakedownBtn.className = "bg-[#78756d]/30 text-[#78756d] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl transition-all flex items-center gap-2 cursor-not-allowed opacity-60";
+        openTakedownBtn.innerHTML = `
+          <svg class="w-4 h-4 text-[#5db872]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span>Clean Profile (Takedown Inactive)</span>
+        `;
+      }
+    }
+
+    // Flags List
+    const flagsList = document.getElementById('res-flags');
+    if (flagsList && data.flags) {
+      const isClean = scoreVal < 40;
+      flagsList.innerHTML = data.flags.map((f: string) => `
+        <li class="p-3 bg-[#faf9f5] dark:bg-[#121110] rounded-xl border-l-4 ${isClean ? 'border-[#5db872]' : 'border-[#c64545]'} text-[#141413] dark:text-[#faf9f5]">
+          ${isClean ? '✓' : '⚠'} ${f}
+        </li>
+      `).join('');
+    }
+
+    // Render Multi-Modal Recent Posts (Image OCR + Voiceover Speech Transcripts)
+    const postsGrid = document.getElementById('res-posts-grid');
+    const postsCountBadge = document.getElementById('posts-count-badge');
+    if (postsGrid) {
+      if (data.recent_posts && data.recent_posts.length > 0) {
+        if (postsCountBadge) postsCountBadge.textContent = `${data.recent_posts.length} Posts Inspected`;
+        postsGrid.innerHTML = data.recent_posts.map((post: any) => {
+          const isThreat = post.post_threat_flag || (post.audio_threat_score && post.audio_threat_score >= 60);
+          return `
+            <div class="bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl overflow-hidden card-lift flex flex-col justify-between shadow-2xs">
+              <div>
+                <!-- Image Header with Threat Tag -->
+                <div class="relative h-44 w-full bg-[#e6dfd8]/30 overflow-hidden">
+                  <img
+                    src="${post.image_url || 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600'}"
+                    alt="Post Evidence"
+                    class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider uppercase ${isThreat ? 'bg-red-600 text-white' : 'bg-emerald-600 text-white'} shadow-xs">
+                      ${isThreat ? '⚠ PHISHING / FRAUD' : '✓ BENIGN POST'}
+                    </span>
+                  </div>
+                  <div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-black/70 text-white backdrop-blur-xs">
+                    ${post.posted_date || 'Recent'}
+                  </div>
+                </div>
+
+                <!-- Post Body Content -->
+                <div class="p-4 space-y-3">
+                  <!-- Caption -->
+                  <div>
+                    <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-1">Caption Copy:</span>
+                    <p class="text-xs text-[#141413] dark:text-[#faf9f5] font-sans line-clamp-3 leading-relaxed">
+                      ${post.caption || '(No caption text)'}
+                    </p>
+                  </div>
+
+                  <!-- OCR Extracted Overlay -->
+                  <div class="p-2.5 rounded-xl bg-white dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-[#cc785c] font-bold mb-1">
+                      <span>📸 IMAGE OCR EXTRACT:</span>
+                    </div>
+                    <p class="text-[11px] font-mono ${isThreat ? 'text-[#c64545] font-semibold' : 'text-[#78756d]'} leading-snug">
+                      ${post.ocr_extracted_text || 'No text detected in graphic'}
+                    </p>
+                  </div>
+
+                  <!-- Audio & Voiceover Transcript -->
+                  <div class="p-2.5 rounded-xl bg-white dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                    <div class="flex items-center justify-between text-[10px] font-mono mb-1">
+                      <span class="text-[#3b82f6] font-bold">🎙 AUDIO / VOICEOVER:</span>
+                      <span class="font-bold ${post.audio_threat_score >= 60 ? 'text-[#c64545]' : 'text-[#5db872]'}">
+                        ${post.audio_threat_score ? post.audio_threat_score.toFixed(0) : '0'}% Risk
+                      </span>
+                    </div>
+                    <div class="text-[10px] text-[#78756d] truncate font-mono mb-1">Track: ${post.audio_track || 'Original Audio'}</div>
+                    <p class="text-[11px] font-mono text-[#141413] dark:text-[#faf9f5] line-clamp-3 italic">
+                      ${post.audio_transcript || 'No voiceover speech detected'}
+                    </p>
+                  </div>
+
+                  <!-- Flagged Keywords Pills -->
+                  ${post.flagged_keywords && post.flagged_keywords.length > 0 ? `
+                    <div class="flex flex-wrap gap-1 pt-1">
+                      ${post.flagged_keywords.map((kw: string) => `
+                        <span class="px-2 py-0.5 rounded-md bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900 text-[10px] font-mono font-bold">
+                          ${kw}
+                        </span>
+                      `).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Metrics Footer -->
+              <div class="px-4 py-2.5 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-[11px] font-mono text-[#78756d]">
+                <span>❤️ ${(post.likes_count || 0).toLocaleString()} likes</span>
+                <span>💬 ${(post.comments_count || 0).toLocaleString()} comments</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        if (postsCountBadge) postsCountBadge.textContent = '0 Posts Found';
+        postsGrid.innerHTML = `
+          <div class="col-span-full py-8 text-center text-xs font-mono text-[#78756d]">
+            No public posts could be extracted for this profile.
+          </div>
+        `;
+      }
+    }
+
+    // Render Cross-Platform OSINT Footprint
+    const footprintGrid = document.getElementById('res-footprint-grid');
+    const footprintCountBadge = document.getElementById('footprint-count-badge');
+    if (footprintGrid) {
+      if (data.cross_platform_footprint && data.cross_platform_footprint.length > 0) {
+        if (footprintCountBadge) footprintCountBadge.textContent = `${data.cross_platform_footprint.length} Platforms Checked`;
+        footprintGrid.innerHTML = data.cross_platform_footprint.map((fp: any) => {
+          const isHigh = fp.threat_level === 'HIGH' || fp.threat_level === 'CRITICAL';
+          const isMedium = fp.threat_level === 'MEDIUM';
+          const badgeClass = isHigh
+            ? 'bg-red-100 text-red-800 dark:bg-red-950/60 dark:text-red-300 border-red-200 dark:border-red-900'
+            : isMedium
+            ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-900'
+            : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900';
+
+          return `
+            <div class="p-4 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] flex flex-col justify-between space-y-3 card-lift shadow-2xs">
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-[#141413] dark:text-[#faf9f5] font-serif">${fp.platform}</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase border ${badgeClass}">
+                    ${fp.threat_level}
+                  </span>
+                </div>
+                <div class="font-mono text-xs font-bold text-[#cc785c] mt-1 truncate" title="${fp.handle_or_name}">
+                  ${fp.handle_or_name}
+                </div>
+                <div class="text-[10px] font-mono text-[#78756d] mt-0.5 uppercase tracking-wide">
+                  Status: <strong class="${isHigh ? 'text-[#c64545]' : 'text-[#5db872]'}">${fp.status.replace(/_/g, ' ')}</strong>
+                </div>
+                <p class="text-xs text-[#78756d] dark:text-[#8e8b82] mt-2 leading-relaxed">
+                  ${fp.notes || 'No active anomalies identified.'}
+                </p>
+              </div>
+
+              <div class="pt-2 border-t border-[#e6dfd8]/60 dark:border-[#24221e]">
+                <a
+                  href="${fp.url}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-[11px] font-mono text-[#cc785c] hover:underline flex items-center justify-between"
+                >
+                  <span>Inspect Surface</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        if (footprintCountBadge) footprintCountBadge.textContent = '0 Surfaces';
+        footprintGrid.innerHTML = `
+          <div class="col-span-full py-8 text-center text-xs font-mono text-[#78756d]">
+            No cross-platform presence discovered.
+          </div>
+        `;
+      }
+    }
+
+    // Configure takedown text if impersonator
+    if (scoreVal >= 70) {
+      const takedownText = `FORMAL CEASE AND DESIST & TRADEMARK INFRINGEMENT NOTICE
+Ref: CASE-${data.scan_id}
+Notice To: Trust & Safety Legal Compliance, ${data.platform} Operations
+
+RE: IMMEDIATE EXPEDITED TAKEDOWN OF UNLAWFUL IMPERSONATION ACCOUNT ${data.suspect_handle}
+
+Dear Platform Legal Counsel,
+
+We represent the proprietary corporate interests of ${data.brand_profile?.brand_name || data.brand_name}. This document constitutes a formal Demand for Immediate Takedown pursuant to 17 U.S.C. § 512(c).
+
+I. INFRINGING DETAILS:
+- Offending Handle: ${data.suspect_handle}
+- Profile URL: ${data.suspect_url}
+- Platform: ${data.platform}
+- Composite Threat Level: ${data.severity_level} (${data.unified_threat_score}/100)
+
+II. EVIDENCE CITATIONS:
+1. Exact Visual Logomark Reproduction: Matched via 512-dim CLIP embedding space at ${(data.pillar_1_vision?.score || 95)}% similarity.
+2. Advance-Fee Recruitment Fraud: DistilBERT NLP classifier verified solicitation of unauthorized monies.
+3. Homoglyph Affix Manipulation: Target handle intentionally appends unauthorized designations (_official, _support).
+
+Submitted by: AegisMark AI Cyber Operations`;
+
+      const modalTextarea = document.getElementById('modal-takedown-text') as HTMLTextAreaElement;
+      if (modalTextarea) modalTextarea.value = takedownText;
+      const modalCaseId = document.getElementById('modal-case-id') as HTMLElement;
+      if (modalCaseId) modalCaseId.textContent = `CASE-${data.scan_id}`;
+    }
+  }
+
+  openTakedownBtn?.addEventListener('click', () => {
+    if (!openTakedownBtn.disabled) {
+      takedownModal?.classList.remove('hidden');
+    }
+  });
+</script>

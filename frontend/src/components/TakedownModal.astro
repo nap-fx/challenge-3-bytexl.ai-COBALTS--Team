@@ -1,0 +1,143 @@
+---
+// TakedownModal.astro — Beautiful Claude-Style Modal Popup from dailyhabs
+---
+
+<div id="takedown-modal" class="fixed inset-0 z-50 hidden bg-[#121110]/75 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="bg-[#ffffff] dark:bg-[#181715] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative transform transition-all overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl bg-[#cc785c]/15 text-[#cc785c] flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+            Legal Cease & Desist Takedown Notice
+          </h3>
+          <p class="text-[11px] text-[#78756d] dark:text-[#8e8b82] font-mono">
+            SECTION 512(c) DMCA & APP STORE ABUSE STRIKE
+          </p>
+        </div>
+      </div>
+
+      <button id="close-modal-btn" type="button" class="text-[#78756d] hover:text-[#141413] dark:hover:text-[#faf9f5] p-2 rounded-xl hover:bg-[#f4efe6] dark:hover:bg-[#24221e] transition-colors cursor-pointer" aria-label="Close modal">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="py-5 space-y-4 text-xs font-mono">
+      <div class="bg-[#f4efe6] dark:bg-[#24221e] p-3 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase">Incident Case Ref</span>
+          <span id="modal-case-id" class="font-bold text-[#141413] dark:text-[#faf9f5]">CASE-AUTOGEN</span>
+        </div>
+        <div>
+          <span class="text-[#78756d] dark:text-[#8e8b82] block text-[10px] uppercase">Legal Status</span>
+          <span class="font-bold text-[#c64545] dark:text-[#f87171]">VERIFIED STRIKE PACKAGE</span>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#141413] dark:text-[#faf9f5] mb-1.5 font-sans">
+          Generated Cease-and-Desist Notice Draft
+        </label>
+        <textarea
+          id="modal-takedown-text"
+          readonly
+          rows="10"
+          class="w-full p-3.5 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] font-mono rounded-xl focus:outline-none resize-none leading-relaxed"
+        ></textarea>
+      </div>
+
+      <div class="bg-[#cc785c]/10 border border-[#cc785c]/30 p-3 rounded-2xl text-[11px] text-[#78756d] dark:text-[#a09d96]">
+        <strong class="text-accent font-sans block mb-0.5">Automated Cryptographic Evidence Bundle Included:</strong>
+        Includes 512-dim CLIP logo cosine vector similarity, DistilBERT NLP classification tags, OCR transcripts, and astroturfed bot review burst logs.
+      </div>
+    </div>
+
+    <!-- Modal Footer Actions -->
+    <div class="pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex flex-wrap items-center justify-between gap-3">
+      <span id="copy-status" class="text-xs text-[#5db872] font-semibold hidden">✓ Copied notice text!</span>
+
+      <div class="flex items-center gap-2.5 ml-auto">
+        <button id="copy-takedown-btn" type="button" class="px-4 py-2 text-xs font-bold bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all btn-3d-pop cursor-pointer">
+          📋 Copy Text
+        </button>
+        <button id="download-pdf-btn" type="button" class="btn-accent text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all btn-3d-pop btn-3d-coral cursor-pointer">
+          📄 Download Signed PDF
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('takedown-modal');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const copyBtn = document.getElementById('copy-takedown-btn');
+  const copyStatus = document.getElementById('copy-status');
+  const downloadPdfBtn = document.getElementById('download-pdf-btn');
+
+  closeBtn?.addEventListener('click', () => modal?.classList.add('hidden'));
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal?.classList.add('hidden');
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const textarea = document.getElementById('modal-takedown-text') as HTMLTextAreaElement;
+    if (textarea) {
+      navigator.clipboard.writeText(textarea.value).then(() => {
+        if (copyStatus) {
+          copyStatus.classList.remove('hidden');
+          setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+        }
+      });
+    }
+  });
+
+  downloadPdfBtn?.addEventListener('click', async () => {
+    const textarea = document.getElementById('modal-takedown-text') as HTMLTextAreaElement;
+    const text = textarea ? textarea.value : '';
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/takedown/pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scan_id: (document.getElementById('modal-case-id') as HTMLElement)?.textContent || 'AUTOGEN',
+          takedown_notice_text: text
+        })
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `brandshield-legal-takedown-notice.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `brandshield-takedown-notice.txt`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    } catch (err) {
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `brandshield-takedown-notice.txt`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  });
+</script>

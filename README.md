@@ -1,4 +1,4 @@
-# 🛡️ BrandShield AI: Master Blueprint & Execution Outline
+# 🛡️ AegisMark AI: Master Blueprint & Execution Outline
 ## Challenge 03: Digital Risk Protection Platform (Presented by Kampus.vc | HacXLerate 2026)
 
 > **Team Lead:** Abdul Malik | **Institution:** Chandigarh University  
@@ -20,7 +20,7 @@ Fast-growing startups, fintechs, and tech institutions (like ByteXL, Zomato, Zer
 2. **Naive Keyword Filtering Fails:** Basic regex cannot detect altered logos, homoglyphic characters, or nuanced scam intent in bios.
 3. **Chatbot Wrappers Lack Depth:** Most hackathon teams present a shallow ChatGPT wrapper that cannot scale or process images in real time.
 
-### Our Solution: **BrandShield AI**
+### Our Solution: **AegisMark AI**
 An autonomous, multi-modal **Digital Risk Protection (DRP) Platform** that continuously scans social handles, calculates a unified 0–100 Threat Index using **vector similarity (FAISS) and NLP**, and generates automated **1-Click Legal Takedown Notices**.
 
 ---
@@ -105,7 +105,7 @@ Where:
 
 Judges at VC hackathons want to see **immediate business resolution**, not just diagnosis:
 * When a **CRITICAL** threat is detected, the dashboard activates the **"Generate Legal Takedown"** button.
-* In 1 click, BrandShield AI generates a formal **Cease & Desist / DMCA Infringement Package**:
+* In 1 click, AegisMark AI generates a formal **Cease & Desist / DMCA Infringement Package**:
   1. **Forensic Evidence:** Timestamped suspect URL, handle ID, and side-by-side visual proof with similarity percentage.
   2. **Legal Citation:** Trademark infringement clauses under the Information Technology Act & platform terms of service.
   3. **Direct Action:** Pre-addressed email templates for Meta / X / Telegram abuse desks, ready for one-click transmission.
@@ -176,13 +176,13 @@ Judges at VC hackathons want to see **immediate business resolution**, not just 
 ## 8. The Winning 3-Minute Hackathon Pitch Script
 
 * **[0:00 – 0:45] The Hook (The Real Problem):**  
-  *"Judges, right now, while we are presenting in this room, a student looking for a ByteXL job or a Zomato refund is being scammed by a fake Telegram channel or Instagram handle. Brands spend millions building trust, but scammers steal it in seconds with fake logos and deceptive usernames. Current brand protection takes 72 hours of manual complaints. We built **BrandShield AI** to solve this in under 2 seconds."*
+  *"Judges, right now, while we are presenting in this room, a student looking for a ByteXL job or a Zomato refund is being scammed by a fake Telegram channel or Instagram handle. Brands spend millions building trust, but scammers steal it in seconds with fake logos and deceptive usernames. Current brand protection takes 72 hours of manual complaints. We built **AegisMark AI** to solve this in under 2 seconds."*
 * **[0:45 – 1:45] The Live Demonstration (The 'Aha!' Moment):**  
   *(Open the AGY live dashboard in dark mode)*  
   *"Here is our live platform. Let's enter ByteXL and scan a suspect account `@bytexl_support_official`. Watch what happens when we hit Scan..."*  
   *(Radar pulses, results pop up)*  
   *"In 120 milliseconds, our multi-modal engine did three things: First, Meta FAISS matched their avatar against the real ByteXL logo with a 94% visual match. Second, our NLP engine caught scam phrases in their bio demanding UPI payments. Third, our algorithm flagged the typosquatting affixes. Result: **96% CRITICAL THREAT**."*
 * **[1:45 – 2:30] The Knockout Punch (Automated Takedown):**  
-  *"We don't just alert the brand; we resolve it. With one click on 'Generate Takedown Notice', BrandShield AI compiles forensic timestamps, side-by-side evidence, and generates a pre-formatted legal Cease & Desist package ready for Meta and Google abuse desks."*
+  *"We don't just alert the brand; we resolve it. With one click on 'Generate Takedown Notice', AegisMark AI compiles forensic timestamps, side-by-side evidence, and generates a pre-formatted legal Cease & Desist package ready for Meta and Google abuse desks."*
 * **[2:30 – 3:00] Market & VC Appeal (Kampus.vc Focus):**  
-  *"BrandShield AI is built as a B2B SaaS platform for every venture-backed startup, university, and financial institution. Our vector search architecture scales to millions of assets with sub-second latency. We are protecting the future of digital brands. Thank you!"*
+  *"AegisMark AI is built as a B2B SaaS platform for every venture-backed startup, university, and financial institution. Our vector search architecture scales to millions of assets with sub-second latency. We are protecting the future of digital brands. Thank you!"*

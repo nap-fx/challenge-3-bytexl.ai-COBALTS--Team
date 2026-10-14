@@ -1,0 +1,79 @@
+---
+interface Props {
+  split: {
+    "5_star": number;
+    "4_star": number;
+    "3_star": number;
+    "2_star": number;
+    "1_star": number;
+  };
+  totalReviews: number;
+}
+
+const {
+  split = { "5_star": 35, "4_star": 0, "3_star": 0, "2_star": 0, "1_star": 17 },
+  totalReviews = 52
+} = Astro.props;
+
+const stars = [
+  { label: "5 Star", count: split["5_star"], color: "bg-[#e8a55a]", isBotSuspicious: true },
+  { label: "4 Star", count: split["4_star"], color: "bg-[#78756d]", isBotSuspicious: false },
+  { label: "3 Star", count: split["3_star"], color: "bg-[#78756d]", isBotSuspicious: false },
+  { label: "2 Star", count: split["2_star"], color: "bg-[#78756d]", isBotSuspicious: false },
+  { label: "1 Star", count: split["1_star"], color: "bg-[#c64545]", isBotSuspicious: false },
+];
+
+const maxCount = Math.max(...stars.map(s => s.count), 1);
+---
+
+<div class="bg-[#ffffff] dark:bg-[#181715] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 rounded-2xl card-lift space-y-4">
+  <div class="flex items-center justify-between pb-3 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+    <div>
+      <div class="text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] flex items-center gap-2">
+        <span>Bimodal Rating Polarity Radar</span>
+        <span class="text-[10px] font-bold bg-[#c64545]/15 text-[#c64545] border border-[#c64545]/30 px-2 py-0.5 rounded-full uppercase">
+          POLARIZED
+        </span>
+      </div>
+      <p class="text-xs text-[#78756d] dark:text-[#8e8b82] mt-0.5">
+        Contrasts astroturfed 5-star bot clusters against authentic 1-star victim fraud reports.
+      </p>
+    </div>
+    <div class="text-right">
+      <span class="text-[10px] text-[#78756d] uppercase block font-mono">Reviews</span>
+      <span class="text-lg font-bold text-[#141413] dark:text-[#faf9f5] font-mono">{totalReviews}</span>
+    </div>
+  </div>
+
+  <div class="space-y-2.5">
+    {stars.map((star) => {
+      const pct = totalReviews > 0 ? Math.round((star.count / totalReviews) * 100) : 0;
+      const barWidth = Math.round((star.count / maxCount) * 100);
+
+      return (
+        <div class="flex items-center gap-3 text-xs">
+          <span class="w-14 font-medium text-[#78756d] dark:text-[#8e8b82] font-mono shrink-0">{star.label}</span>
+          <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+            <div
+              class:list={["h-full transition-all duration-500 rounded-full", star.color]}
+              style={`width: ${barWidth}%`}
+            ></div>
+          </div>
+          <span class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5] shrink-0">{star.count}</span>
+          <span class="w-12 text-right font-mono text-[11px] text-[#78756d] shrink-0">({pct}%)</span>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="pt-3 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-[11px] text-[#78756d] dark:text-[#8e8b82]">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#e8a55a] inline-block"></span>
+      <span>Synthetic Bot Cluster (5★)</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#c64545] inline-block"></span>
+      <span>Real Victim Reports (1★)</span>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 from typing import Dict, Any, List
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from ....vision_engine import VERIFIED_BRANDS
+from ....schemas import BrandProfile, BrandProfileCreateRequest
 
 router = APIRouter()
 
@@ -79,12 +80,44 @@ async def health_check() -> Dict[str, Any]:
 async def list_monitored_brands() -> Dict[str, Any]:
     return {
         "kpis": {
-            "monitored_brands": 14,
+            "monitored_brands": len(VERIFIED_BRANDS),
             "total_accounts_scanned": 8450,
             "critical_impersonators_blocked": 6,
             "avg_scan_latency_ms": 14.2,
         },
         "brands": [b.model_dump() for b in VERIFIED_BRANDS.values()],
+    }
+
+
+@router.get("/brands/{brand_id}")
+async def get_brand_profile(brand_id: str) -> Dict[str, Any]:
+    for key, profile in VERIFIED_BRANDS.items():
+        if profile.brand_id.lower() == brand_id.lower() or key == brand_id.lower():
+            return profile.model_dump()
+    raise HTTPException(status_code=404, detail=f"Brand profile '{brand_id}' not found.")
+
+
+@router.post("/brands")
+async def register_brand_profile(payload: BrandProfileCreateRequest) -> Dict[str, Any]:
+    key = payload.brand_name.lower().strip()
+    brand_id = f"BRD-{len(VERIFIED_BRANDS) + 1:03d}"
+    new_profile = BrandProfile(
+        brand_id=brand_id,
+        brand_name=payload.brand_name,
+        official_handle=payload.official_handle,
+        official_domain=payload.official_domain,
+        category=payload.category,
+        official_bio=payload.official_bio,
+        official_mobile_apps=payload.official_mobile_apps,
+        official_publisher=payload.official_publisher,
+        verified_followers=payload.verified_followers,
+        logo_fingerprint_id=f"vec_{key}_512d_v1",
+    )
+    VERIFIED_BRANDS[key] = new_profile
+    return {
+        "status": "REGISTERED_SUCCESSFULLY",
+        "brand_id": brand_id,
+        "brand_profile": new_profile.model_dump(),
     }
 
 

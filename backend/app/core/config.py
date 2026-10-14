@@ -1,12 +1,12 @@
 """
-Core Application Settings & Constants for BrandShield AI Backend
+Core Application Settings & Constants for AegisMark AI Backend
 """
 
 from typing import List
 
 
 class Settings:
-    PROJECT_NAME: str = "BrandShield AI — Digital Risk Protection Platform"
+    PROJECT_NAME: str = "AegisMark AI — Digital Risk Protection Platform"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
     EMBEDDING_DIM: int = 512

@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Layout title="AegisMark AI — System Architecture & Forensic Methodology" activeTab="methodology">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-10">
+
+    <!-- 1. EDITORIAL HEADER -->
+    <section class="border-b border-[#e6dfd8] dark:border-[#24221e] pb-8 space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-6 bg-accent rounded-full inline-block"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-[#78756d] dark:text-[#8e8b82] font-mono">
+          TECHNICAL DOSSIER // FORENSIC ARCHITECTURE
+        </span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] leading-tight">
+        Multi-Modal Detection Pipeline & 5-Pillar Forensic Engine
+      </h1>
+
+      <p class="text-sm sm:text-base text-[#78756d] dark:text-[#8e8b82] max-w-3xl leading-relaxed">
+        How AegisMark AI fuses high-dimensional neural vector embeddings, adversarial text deobfuscation, homoglyph distance metrics, and store astroturfing signals into a unified threat index with sub-15ms latency.
+      </p>
+
+      <!-- Live Health Probe Banner -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-5 rounded-3xl shadow-xs flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+          <div>
+            <span class="text-[10px] text-[#78756d] uppercase block font-sans">Core Defense Engine</span>
+            <strong class="text-[#141413] dark:text-[#faf9f5] text-sm">BACKEND: OPERATIONAL (v1.0.0)</strong>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 text-[11px] text-[#78756d] dark:text-[#8e8b82]">
+          <div>FAISS INDEX: <strong class="text-[#141413] dark:text-[#faf9f5]">IndexFlatIP (512-d)</strong></div>
+          <div>NLP MODEL: <strong class="text-[#141413] dark:text-[#faf9f5]">DistilBERT-ScamIntent</strong></div>
+          <div>HEURISTICS: <strong class="text-[#141413] dark:text-[#faf9f5]">Wagner-Fischer Matrix</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. THE THREE CORE MULTI-MODAL PILLARS -->
+    <section class="space-y-6">
+      <SectionHeader
+        eyebrow="NEURAL ARCHITECTURE"
+        title="The Multi-Modal Triad: Vision, NLP & Heuristics"
+        subtitle="Three specialized diagnostic engines run in parallel to generate independent threat scores before synthesis."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Pillar 1: Vision -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent font-sans">
+                PILLAR 1: COMPUTER VISION
+              </span>
+              <span class="text-xs font-mono bg-[#f4efe6] dark:bg-[#24221e] px-2.5 py-1 rounded-lg font-bold text-[#141413] dark:text-[#faf9f5]">
+                CLIP-ViT-B/32
+              </span>
+            </div>
+
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+              512-Dim Dense Vector Matching
+            </h3>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Extracts normalized visual embeddings from suspect profile avatars and logos. Matches against registered brand assets using inner-product cosine similarity in a local FAISS index.
+            </p>
+          </div>
+
+          <div class="bg-[#faf9f5] dark:bg-[#121110] p-4 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono space-y-1.5">
+            <div class="font-bold text-[#141413] dark:text-[#faf9f5] text-[10px] uppercase font-sans">Automated Letterbox Crop:</div>
+            <p class="text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Trims uniform border padding (<code class="text-accent font-bold">crop_active_foreground</code>), eliminating false-negatives from visual evasion border padding.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 2: NLP -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent font-sans">
+                PILLAR 2: NLP SCAM INTENT
+              </span>
+              <span class="text-xs font-mono bg-[#f4efe6] dark:bg-[#24221e] px-2.5 py-1 rounded-lg font-bold text-[#141413] dark:text-[#faf9f5]">
+                DistilBERT ONNX
+              </span>
+            </div>
+
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+              Adversarial Text & Scam NLP
+            </h3>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Scans social profile bios, posts, and messaging for advance-fee scams, fake HR placement recruitment fees, UPI handles, and confidential exam-paper selling.
+            </p>
+          </div>
+
+          <div class="bg-[#faf9f5] dark:bg-[#121110] p-4 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono space-y-1.5">
+            <div class="font-bold text-[#141413] dark:text-[#faf9f5] text-[10px] uppercase font-sans">Evasion Deobfuscator:</div>
+            <p class="text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Strips zero-width Unicode (<code class="text-accent font-bold">\u200b</code>, <code class="text-accent font-bold">\u200c</code>) and normalizes leetspeak substitutions before NLP scoring.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Heuristics -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-7 shadow-xs space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent font-sans">
+                PILLAR 3: HEURISTICS & GRAPH
+              </span>
+              <span class="text-xs font-mono bg-[#f4efe6] dark:bg-[#24221e] px-2.5 py-1 rounded-lg font-bold text-[#141413] dark:text-[#faf9f5]">
+                Wagner-Fischer
+              </span>
+            </div>
+
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+              Homoglyph & Velocity Radar
+            </h3>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Measures normalized string distance, deceptive keyword affixes (<code class="text-accent font-bold">_official</code>, <code class="text-accent font-bold">_support</code>, <code class="text-accent font-bold">_desk</code>), and Cyrillic lookalike character swaps.
+            </p>
+          </div>
+
+          <div class="bg-[#faf9f5] dark:bg-[#121110] p-4 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono space-y-1.5">
+            <div class="font-bold text-[#141413] dark:text-[#faf9f5] text-[10px] uppercase font-sans">Follower Velocity Profiling:</div>
+            <p class="text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Flags burner accounts that accumulate 3,000+ followers in 24 hours via paid bot-farms (<code class="text-rose-600 dark:text-rose-400 font-bold">BOT_FARM_INFLATION</code>).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THE 5-PILLAR APP STORE FORENSIC ALGORITHM -->
+    <section class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 sm:p-8 rounded-3xl shadow-xs space-y-6">
+      <SectionHeader
+        eyebrow="MOBILE ENGINE"
+        title="The 5-Pillar App Store Forensic Algorithm"
+        subtitle="Unmasking rogue apps, astroturfed ratings, and rogue publisher rings on Google Play and APK repositories."
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="bg-[#faf9f5] dark:bg-[#121110] p-5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2.5">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider block">PILLAR 1</span>
+          <h4 class="font-serif font-bold text-base text-[#141413] dark:text-[#faf9f5]">Synthetic Bot Reviews</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Identifies repetitive AI-generated phrasing and bot language markers across app store review clusters.
+          </p>
+        </div>
+
+        <div class="bg-[#faf9f5] dark:bg-[#121110] p-5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2.5">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider block">PILLAR 2</span>
+          <h4 class="font-serif font-bold text-base text-[#141413] dark:text-[#faf9f5]">Temporal Astroturfing</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Detects unnatural bursts of positive reviews posted within narrow 24-hour windows to manipulate search rankings.
+          </p>
+        </div>
+
+        <div class="bg-[#faf9f5] dark:bg-[#121110] p-5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2.5">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider block">PILLAR 3</span>
+          <h4 class="font-serif font-bold text-base text-[#141413] dark:text-[#faf9f5]">Publisher OSINT</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Scrapes publisher portfolios, average application lifespans (&lt;30 days), and cross-app malware associations.
+          </p>
+        </div>
+
+        <div class="bg-[#faf9f5] dark:bg-[#121110] p-5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2.5">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider block">PILLAR 4</span>
+          <h4 class="font-serif font-bold text-base text-[#141413] dark:text-[#faf9f5]">Bimodal Rating Split</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Contrasts fake 5-star bot clusters against real 1-star victim fraud complaints, exposing artificial rating polarization.
+          </p>
+        </div>
+
+        <div class="bg-[#faf9f5] dark:bg-[#121110] p-5 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] space-y-2.5">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider block">PILLAR 5</span>
+          <h4 class="font-serif font-bold text-base text-[#141413] dark:text-[#faf9f5]">Sideload & Mirror Risk</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Flags dangerous APK distribution on third-party mirrors requesting intrusive background SMS permissions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. REST API CONTRACT REFERENCE -->
+    <section class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 sm:p-8 rounded-3xl shadow-xs space-y-6">
+      <div class="flex items-center justify-between border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-4">
+        <div>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+            REST API ENDPOINT DIRECTORY
+          </h3>
+          <span class="text-xs text-[#78756d] dark:text-[#8e8b82]">OpenAPI 3.1 Interoperable Contract</span>
+        </div>
+        <a
+          href="http://127.0.0.1:8000/docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-3d-pop bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#e6dfd8] dark:hover:bg-[#2d2b26] border border-[#e6dfd8] dark:border-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5"
+        >
+          <span>Open Swagger Docs ↗</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">POST /api/v1/scan</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">Multi-modal social handle threat assessment</span>
+        </div>
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">POST /api/v1/scan/app-store</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">5-Pillar rogue mobile app & bot review triage</span>
+        </div>
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">GET /api/v1/brands</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">List monitored enterprise brand profiles & SOC KPIs</span>
+        </div>
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">POST /api/v1/brands</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">Enroll new enterprise brand into active surveillance</span>
+        </div>
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">GET /api/v1/scans/history</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">Retrieve persistent SQLite investigation audit stream</span>
+        </div>
+        <div class="p-4 bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl space-y-1">
+          <strong class="text-[#141413] dark:text-[#faf9f5] block font-bold">POST /api/v1/takedown/pdf</strong>
+          <span class="text-[#78756d] dark:text-[#8e8b82]">Generate binary printable legal cease-and-desist PDF</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>

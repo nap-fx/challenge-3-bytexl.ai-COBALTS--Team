@@ -30,3 +30,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+scans_audit.db
+*.db
+*skill*vault*
+.agents/

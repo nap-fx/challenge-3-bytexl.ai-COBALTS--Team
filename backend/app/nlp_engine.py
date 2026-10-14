@@ -15,6 +15,7 @@ FRAUD_SIGNATURES: List[Tuple[str, str, float]] = [
     (r"[a-zA-Z0-9.\-_]{2,}@(okhdfcbank|okaxis|oksbi|okicici|paytm|ybl|ibl|axl|upi)", "UPI Payment Solicitation", 38.0),
     (r"(?:rs\.?|inr|₹)\s?\d{2,6}", "Direct Monetary Demand", 32.0),
     (r"\b(registration fee|security deposit|processing fee|interview fee|verification charge|onboarding fee)\b", "Advance-Fee Recruitment Fraud", 34.0),
+    (r"\b(exam leak|question paper leak|paper leaked|answer key|bytexl course resale|cheap lms|cheat sheet|test paper leak|semester exam leak|exam dumps|placement paper|lms credentials)\b", "Confidential Exam & Course Material Leak", 36.0),
     (r"\b(instant refund|immediate refund|claim refund|pending refund|refund desk|failed transaction help)\b", "Refund Phishing Lure", 30.0),
     (r"\b(dm for job|guaranteed placement|direct hiring|offer letter fee|urgent hiring|hr desk)\b", "Fake Job / Placement Scam", 28.0),
     (r"\b(official support|24x7 helpdesk|customer care official|verified support desk|helpline number)\b", "Unauthorized Support Impersonation", 24.0),
@@ -23,17 +24,47 @@ FRAUD_SIGNATURES: List[Tuple[str, str, float]] = [
 ]
 
 
+def normalize_evasion_text(raw_text: str) -> Tuple[str, bool]:
+    """
+    Strips zero-width characters, decodes leetspeak and deceptive emoji tokens,
+    and detects intentional adversarial text obfuscation.
+    """
+    obfuscation_detected = False
+    
+    # Check for zero-width spaces / hidden unicode
+    if re.search(r"[\u200b\u200c\u200d\ufeff]", raw_text):
+        obfuscation_detected = True
+        raw_text = re.sub(r"[\u200b\u200c\u200d\ufeff]", "", raw_text)
+
+    # Normalize leetspeak / spaced-out deceptive tokens (e.g., 'U P I', 'U.P.I', 'f.e.e')
+    if re.search(r"\b(u[\s\.\-_]*p[\s\.\-_]*i|f[\s\.\-_]*e[\s\.\-_]*e)\b", raw_text, re.I):
+        obfuscation_detected = True
+        raw_text = re.sub(r"u[\s\.\-_]*p[\s\.\-_]*i", "UPI", raw_text, flags=re.I)
+        raw_text = re.sub(r"f[\s\.\-_]*e[\s\.\-_]*e", "fee", raw_text, flags=re.I)
+
+    # Decode common emoji substitutions
+    emoji_map = {"🅿️": "P", "🆔": "ID", "💰": "money", "💵": "cash", "⚠️": "alert"}
+    for em, replacement in emoji_map.items():
+        if em in raw_text:
+            raw_text = raw_text.replace(em, replacement)
+
+    return raw_text, obfuscation_detected
+
+
 def analyze_bio_and_intent(bio_text: str, suspect_url: Optional[str] = None) -> NLPResult:
     t0 = time.perf_counter()
-    combined_text = f"{bio_text or ''} {suspect_url or ''}".strip()
+    raw_combined = f"{bio_text or ''} {suspect_url or ''}".strip()
 
-    if not combined_text:
+    if not raw_combined:
         return NLPResult(
             score=10.0,
             inference_ms=2.1,
             flagged_phrases=[],
             detected_categories=["Empty / Minimal Profile Bio"]
         )
+
+    # Run adversarial evasion preprocessor
+    combined_text, evasion_found = normalize_evasion_text(raw_combined)
 
     flagged_spans: List[HighlightedSpan] = []
     categories_set = set()
@@ -55,6 +86,17 @@ def analyze_bio_and_intent(bio_text: str, suspect_url: Optional[str] = None) -> 
                 )
                 categories_set.add(category)
                 accumulated_risk += weight
+
+    if evasion_found:
+        accumulated_risk += 22.0
+        categories_set.add("Adversarial Text Evasion / Obfuscation Detected")
+        flagged_spans.append(
+            HighlightedSpan(
+                phrase="Adversarial Leetspeak/Emoji Obfuscation",
+                category="Adversarial Text Evasion / Obfuscation Detected",
+                risk_contribution=22.0,
+            )
+        )
 
     # Sigmoid-style saturation into 0-100 scale so multiple high-risk tokens push toward 95-99%
     if accumulated_risk > 0:

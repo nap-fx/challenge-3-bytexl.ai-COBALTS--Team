@@ -1,0 +1,852 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import RatingBimodalChart from '../components/RatingBimodalChart.astro';
+import TakedownModal from '../components/TakedownModal.astro';
+---
+
+<Layout title="AegisMark AI — 5-Pillar App Store & Mobile APK Scanner" activeTab="app-store">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-16 space-y-12">
+
+    <!-- 1. EDITORIAL HEADER (dailyhabs warm canvas style) -->
+    <div class="relative rounded-3xl bg-gradient-to-br from-[#ffffff] via-[#fbf9f4] to-[#f4efe6] dark:from-[#181715] dark:via-[#1c1b18] dark:to-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] p-8 sm:p-12 shadow-xl overflow-hidden">
+      <!-- Accent Glow Orbs -->
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-[#cc785c]/15 dark:bg-[#cc785c]/20 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#cc785c]/10 dark:bg-[#cc785c]/20 border border-[#cc785c]/30 text-[#cc785c] text-xs font-bold uppercase tracking-wider mb-5 shadow-xs">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          <span>5-Pillar Mobile APK Forensics</span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] leading-[1.15]">
+          App Store & Rogue APK <br />
+          <span class="text-[#cc785c] italic">Forensic Investigator</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-[#78756d] dark:text-[#8e8b82] mt-3 font-medium leading-relaxed max-w-2xl">
+          Audit Google Play Store listings and third-party sideloaded APK mirrors (Uptodown, APKMirror). The backend algorithm calculates synthetic bot review bursts, publisher burner rings, and invasive SMS permissions.
+        </p>
+
+        <!-- Quick Info Badges -->
+        <div class="flex flex-wrap items-center gap-3 mt-6 text-xs font-semibold text-[#78756d] dark:text-[#8e8b82]">
+          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#5db872]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Google Play & Third-Party Mirrors</span>
+          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#cc785c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Bimodal U-Curve Analysis</span>
+          <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Automated Abuse Strike</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SCANNER INPUT CONFIGURATION CARD -->
+    <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-md">
+      <form id="app-scan-form" class="space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Store Link or Package ID Input -->
+          <div>
+            <label for="app_link_input" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-2 font-sans">
+              Store URL, Mirror Link, or Package Name
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#78756d]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+              </div>
+              <input
+                type="text"
+                id="app_link_input"
+                value="https://play.google.com/store/apps/details?id=com.bytexl.placement.guide"
+                placeholder="e.g. https://play.google.com/store/apps/details?id=... or com.bytexl.placement.guide"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] pl-10 pr-4 py-3.5 rounded-2xl font-mono text-xs sm:text-sm text-[#141413] dark:text-[#faf9f5] outline-none focus:border-[#cc785c] transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- App Title / Name -->
+          <div>
+            <label for="app_title_input" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-2 font-sans">
+              Application Title (Search Override)
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#78756d]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              </div>
+              <input
+                type="text"
+                id="app_title_input"
+                value="ByteXL Placement Exam & Student Desk"
+                placeholder="e.g. ByteXL Placement Guide"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] pl-10 pr-4 py-3.5 rounded-2xl font-mono text-xs sm:text-sm text-[#141413] dark:text-[#faf9f5] outline-none focus:border-[#cc785c] transition-colors"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Store Origin Selector -->
+          <div>
+            <label for="app_store_select" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-2 font-sans">
+              Distribution Store / Repository
+            </label>
+            <select
+              id="app_store_select"
+              class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] px-4 py-3.5 rounded-2xl font-mono text-xs sm:text-sm text-[#141413] dark:text-[#faf9f5] outline-none focus:border-[#cc785c] transition-colors cursor-pointer"
+            >
+              <option value="Google Play">Google Play Store</option>
+              <option value="Uptodown">Uptodown (Third-Party Sideload)</option>
+              <option value="APKMirror">APKMirror (Third-Party Sideload)</option>
+              <option value="APKPure">APKPure (Third-Party Sideload)</option>
+              <option value="Apple App Store">Apple App Store (iOS)</option>
+            </select>
+          </div>
+
+          <!-- App Icon / Logo Image Upload -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-2 font-sans">
+              App Icon Graphic (Optional CLIP Cosine Match)
+            </label>
+            <div class="flex items-center gap-3">
+              <label class="flex-1 border-2 border-dashed border-[#e6dfd8] dark:border-[#2d2b26] hover:border-[#cc785c] bg-[#faf9f5] dark:bg-[#121110] px-4 py-2.5 rounded-2xl cursor-pointer flex items-center justify-between text-xs text-[#78756d] font-mono transition-colors">
+                <span id="upload-label">📎 Drag or choose app logo icon</span>
+                <input type="file" id="icon-file-input" accept="image/*" class="hidden" />
+              </label>
+              <div id="image-preview" class="w-12 h-12 border border-[#e6dfd8] dark:border-[#2d2b26] bg-[#faf9f5] dark:bg-[#121110] flex items-center justify-center shrink-0 rounded-2xl overflow-hidden text-[9px] text-[#78756d] font-mono shadow-xs">
+                NO IMG
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Links & Submit Action -->
+        <div class="pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="text-[#78756d] font-bold uppercase text-[10px] tracking-wider mr-1">Try Known Store Links:</span>
+            <button
+              type="button"
+              id="preset-rogue-bytexl"
+              class="preset-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+            >
+              ByteXL Placement Phishing APK
+            </button>
+            <button
+              type="button"
+              id="preset-sideload-apk"
+              class="preset-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+            >
+              Third-Party Sideload Mirror
+            </button>
+            <button
+              type="button"
+              id="preset-official-app"
+              class="preset-btn px-3 py-1.5 bg-[#f4efe6] dark:bg-[#24221e] hover:bg-[#ede6da] dark:hover:bg-[#2d2b26] text-[#141413] dark:text-[#faf9f5] text-[11px] font-mono rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26] transition-all cursor-pointer btn-3d-pop"
+            >
+              Official Verified ByteXL App
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            id="run-scan-btn"
+            class="bg-[#cc785c] hover:bg-[#b86348] text-white text-xs sm:text-sm font-bold px-8 py-3.5 rounded-2xl shadow-md shadow-[#cc785c]/25 transition-all flex items-center justify-center gap-2 btn-3d-pop btn-3d-coral cursor-pointer shrink-0"
+          >
+            <span id="scan-spinner" class="hidden flex items-center gap-2">
+              <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+              <span>Executing 5-Pillar Diagnostics...</span>
+            </span>
+            <span id="scan-btn-text" class="flex items-center gap-1.5">
+              <span>Execute 5-Pillar Audit</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Live Scan Error Banner -->
+      <div id="app-scan-error-banner" class="hidden mt-4 p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200 text-xs flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span id="app-scan-error-message" class="font-medium">Backend connection error. Please verify the FastAPI service is active.</span>
+        </div>
+        <button id="close-app-error-banner" type="button" class="text-red-600 hover:text-red-800 font-bold px-2 py-1 rounded-lg">✕</button>
+      </div>
+    </div>
+
+    <!-- 3. FORENSIC SCORECARD & RESULTS DOSSIER -->
+    <div id="app-results-section" class="space-y-8">
+      
+      <!-- Top Scoreboard Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#e6dfd8] dark:border-[#2d2b26]">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#cc785c] animate-ping"></span>
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#cc785c]">
+              CASE #<span id="app-case-id">GP-884920</span> // STORE AUDIT DOSSIER
+            </span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] mt-0.5">
+            5-Pillar Mobile Risk Scoreboard
+          </h2>
+        </div>
+
+        <button id="open-takedown-btn" type="button" class="bg-[#c64545] hover:bg-[#a83636] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl shadow-md transition-all flex items-center gap-2 btn-3d-pop cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>1-Click App Store Abuse Strike</span>
+        </button>
+      </div>
+
+      <!-- Publisher Mismatch Alert Banner -->
+      <div id="publisher-mismatch-banner" class="bg-red-50 dark:bg-red-950/40 border-2 border-red-500/40 rounded-3xl p-5 flex items-start gap-3.5">
+        <div class="w-8 h-8 rounded-xl bg-red-500/20 text-red-500 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <div>
+          <h4 class="font-serif text-base font-bold text-red-700 dark:text-red-300">Rogue Publisher Impersonation Detected</h4>
+          <p id="publisher-alert-text" class="text-xs text-[#78756d] dark:text-[#a09d96] mt-0.5 leading-relaxed font-mono">
+            App published by unauthorized developer 'Apex Global Studio LLC' mimicking protected enterprise 'ByteXL'.
+          </p>
+        </div>
+      </div>
+
+      <!-- Upper Row: Threat Meter & App Info Card -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+        
+        <!-- App Threat Index Gauge -->
+        <div class="md:col-span-5 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center shadow-xs card-lift">
+          <div class="w-full">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-[#78756d] dark:text-[#8e8b82] block mb-2">
+              App Store Forensic Threat Index
+            </span>
+            <div class="my-4">
+              <div id="app-threat-index" class="font-serif text-6xl sm:text-7xl font-bold text-[#c64545] dark:text-[#f87171] tracking-tight">
+                88.4
+              </div>
+              <div class="text-[11px] text-[#78756d] font-mono mt-1">out of 100 composite threshold</div>
+            </div>
+          </div>
+
+          <div class="w-full space-y-3">
+            <div id="app-severity-badge" class="px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-900 inline-block w-full">
+              CRITICAL THREAT LEVEL
+            </div>
+            <p id="app-recommended-action" class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Confirmed Rogue Impersonator — Immediate Store Takedown Strike Warranted
+            </p>
+          </div>
+        </div>
+
+        <!-- Target App Metadata Details -->
+        <div class="md:col-span-7 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xs card-lift">
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+              <div class="flex items-center gap-3">
+                <div id="dossier-icon" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#cc785c] to-[#a9583e] text-white flex items-center justify-center font-bold text-lg overflow-hidden shrink-0 shadow-xs">
+                  📱
+                </div>
+                <div>
+                  <h3 id="res-app-title" class="font-serif text-xl sm:text-2xl font-bold text-[#141413] dark:text-[#faf9f5]">
+                    ByteXL Placement Exam & Student Desk
+                  </h3>
+                  <div class="flex items-center gap-2 mt-0.5 text-xs text-[#78756d] font-mono">
+                    <span id="res-store-name">Google Play</span>
+                    <span>•</span>
+                    <span id="res-publisher-name" class="text-[#cc785c] font-bold">Apex Global Studio LLC</span>
+                  </div>
+                </div>
+              </div>
+
+              <span class="text-[10px] font-mono bg-[#cc785c]/15 text-[#cc785c] px-2.5 py-1 rounded-full font-bold">
+                AUDITED
+              </span>
+            </div>
+
+            <!-- Package Details Grid -->
+            <div class="grid grid-cols-2 gap-3 mt-4 text-xs font-mono">
+              <div class="p-3 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-0.5">Package ID:</span>
+                <span id="res-package-id" class="font-bold text-[#141413] dark:text-[#faf9f5] truncate block">com.bytexl.placement.guide</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-0.5">Version & Build:</span>
+                <span class="font-bold text-[#141413] dark:text-[#faf9f5]">v1.0.4 (Signed)</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-0.5">Reported Downloads:</span>
+                <span class="font-bold text-[#141413] dark:text-[#faf9f5]">10,000+ Installs</span>
+              </div>
+              <div class="p-3 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26]">
+                <span class="text-[10px] uppercase font-bold text-[#78756d] block mb-0.5">SMS Permissions:</span>
+                <span class="font-bold text-[#c64545]">READ_SMS + RECEIVE_SMS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-[#e6dfd8]/60 dark:border-[#24221e] flex items-center justify-between text-xs font-mono text-[#78756d]">
+            <span>Algorithm: Automated 5-Pillar Model</span>
+            <span class="text-[#5db872] font-bold">FastAPI Connected</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lower Row: 5 Diagnostic Pillars Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Pillar 1: AI Bot Reviews -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#cc785c]">PILLAR 1: REVIEWS</span>
+            <span id="p1-bot-score" class="font-serif text-xl font-bold text-[#c64545]">88.5% AI</span>
+          </div>
+          <h4 class="font-serif text-base font-bold text-[#141413] dark:text-[#faf9f5]">AI Bot Review Synthesis</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Repetitive phrase structures and low perplexity text scores identify astroturfed LLM review generation.
+          </p>
+          <div class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+            Pattern: <strong id="p1-bot-pattern" class="text-[#c64545]">Synthesized Praise</strong>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Astroturfing Burst -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#e8a55a]">PILLAR 2: VELOCITY</span>
+            <span id="p2-burst-score" class="font-serif text-xl font-bold text-[#c64545]">24h Window</span>
+          </div>
+          <h4 class="font-serif text-base font-bold text-[#141413] dark:text-[#faf9f5]">Astroturfing Burst Velocity</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Coordinated surges where positive ratings were artificially posted inside a tight time window.
+          </p>
+          <div class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+            Burst: <strong id="p2-burst-pattern" class="text-[#c64545]">Coordinated Campaign</strong>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Publisher OSINT -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#5db872]">PILLAR 3: DEVELOPER</span>
+            <span id="p3-pub-score" class="font-serif text-xl font-bold text-[#c64545]">18d avg lifespan</span>
+          </div>
+          <h4 class="font-serif text-base font-bold text-[#141413] dark:text-[#faf9f5]">Publisher Reverse OSINT</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Developer account evaluated across cross-store records for disposable clone applications.
+          </p>
+          <div class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+            Ring: <strong id="p3-pub-pattern" class="text-[#c64545]">Burner Publisher Ring</strong>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Bimodal Rating Split (Dynamic Rating Radar) -->
+        <div class="md:col-span-2 lg:col-span-2 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#3b82f6]">PILLAR 4: RATINGS</span>
+                <span id="p4-bimodal-status" class="text-[10px] font-bold bg-[#c64545]/15 text-[#c64545] border border-[#c64545]/30 px-2 py-0.5 rounded-full uppercase">
+                  POLARIZED U-CURVE
+                </span>
+              </div>
+              <h4 class="font-serif text-lg font-bold text-[#141413] dark:text-[#faf9f5] mt-1">Bimodal Rating Polarization Radar</h4>
+              <p class="text-xs text-[#78756d] dark:text-[#8e8b82]">
+                Contrasts astroturfed 5-star bot clusters against authentic 1-star victim fraud reports.
+              </p>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-[#78756d] uppercase block font-mono">Reviews Audited</span>
+              <span id="p4-total-reviews" class="text-xl font-bold text-[#141413] dark:text-[#faf9f5] font-mono">52</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Rating Distribution Bars -->
+          <div class="space-y-2.5">
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-14 font-medium text-[#78756d] font-mono shrink-0">5 Star</span>
+              <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+                <div id="bar-5star" class="h-full bg-[#e8a55a] rounded-full transition-all duration-500" style="width: 67%"></div>
+              </div>
+              <span id="count-5star" class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5]">35</span>
+              <span id="pct-5star" class="w-12 text-right font-mono text-[11px] text-[#78756d]">(67%)</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-14 font-medium text-[#78756d] font-mono shrink-0">4 Star</span>
+              <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+                <div id="bar-4star" class="h-full bg-[#78756d] rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <span id="count-4star" class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5]">0</span>
+              <span id="pct-4star" class="w-12 text-right font-mono text-[11px] text-[#78756d]">(0%)</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-14 font-medium text-[#78756d] font-mono shrink-0">3 Star</span>
+              <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+                <div id="bar-3star" class="h-full bg-[#78756d] rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <span id="count-3star" class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5]">0</span>
+              <span id="pct-3star" class="w-12 text-right font-mono text-[11px] text-[#78756d]">(0%)</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-14 font-medium text-[#78756d] font-mono shrink-0">2 Star</span>
+              <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+                <div id="bar-2star" class="h-full bg-[#78756d] rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <span id="count-2star" class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5]">0</span>
+              <span id="pct-2star" class="w-12 text-right font-mono text-[11px] text-[#78756d]">(0%)</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-14 font-medium text-[#78756d] font-mono shrink-0">1 Star</span>
+              <div class="flex-1 bg-[#f4efe6] dark:bg-[#24221e] h-3 rounded-full overflow-hidden relative">
+                <div id="bar-1star" class="h-full bg-[#c64545] rounded-full transition-all duration-500" style="width: 33%"></div>
+              </div>
+              <span id="count-1star" class="w-10 text-right font-mono font-bold text-[#141413] dark:text-[#faf9f5]">17</span>
+              <span id="pct-1star" class="w-12 text-right font-mono text-[11px] text-[#78756d]">(33%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 5: Sideload & Mirror Risk -->
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 shadow-xs card-lift space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#cc785c]">PILLAR 5: PERMISSIONS</span>
+            <span id="p5-perm-score" class="font-serif text-xl font-bold text-[#c64545]">65.0% Risk</span>
+          </div>
+          <h4 class="font-serif text-base font-bold text-[#141413] dark:text-[#faf9f5]">Permissions & Sideload Mirror Risk</h4>
+          <p class="text-xs text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+            Requests high-privilege SMS interception permissions without legitimate pedagogical utility.
+          </p>
+          <div class="text-[11px] font-mono text-[#78756d] bg-[#faf9f5] dark:bg-[#121110] p-2.5 rounded-xl border border-[#e6dfd8] dark:border-[#2d2b26]">
+            Exploit: <strong id="p5-perm-exploit" class="text-[#c64545]">SMS Interception Risk</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 6. FORENSIC REVIEW SNIPPETS & REAL VICTIM COMPLAINTS -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#cc785c]">FORENSIC EVIDENCE CITATIONS</span>
+            <h4 class="font-serif text-xl font-bold text-[#141413] dark:text-[#faf9f5] mt-0.5">
+              Flagged Bot Clusters & Victim Complaints
+            </h4>
+          </div>
+          <span id="snippets-count" class="text-xs font-mono text-[#78756d]">5 Citations Indexed</span>
+        </div>
+        <div id="res-review-snippets" class="space-y-2.5">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- 7. PUBLISHER REVERSE OSINT & PORTFOLIO BURNER RING -->
+      <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-[#e6dfd8]/60 dark:border-[#24221e]">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#5db872]">DEVELOPER OSINT</span>
+            <h4 class="font-serif text-xl font-bold text-[#141413] dark:text-[#faf9f5] mt-0.5">
+              Discovered Publisher Portfolio & Sister Apps
+            </h4>
+          </div>
+          <span id="portfolio-reputation-badge" class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-900">
+            BURNER DEVELOPER RING
+          </span>
+        </div>
+        <div id="res-portfolio-apps" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Reusable Takedown Notice Modal -->
+  <TakedownModal />
+
+</Layout>
+
+<script>
+  import { apiFetch } from '../lib/api';
+
+  const appForm = document.getElementById('app-scan-form') as HTMLFormElement;
+  const linkInput = document.getElementById('app_link_input') as HTMLInputElement;
+  const titleInput = document.getElementById('app_title_input') as HTMLInputElement;
+  const storeSelect = document.getElementById('app_store_select') as HTMLSelectElement;
+  const iconInput = document.getElementById('icon-file-input') as HTMLInputElement;
+  const runBtn = document.getElementById('run-scan-btn') as HTMLButtonElement;
+  const spinner = document.getElementById('scan-spinner');
+  const btnText = document.getElementById('scan-btn-text');
+  const openTakedownBtn = document.getElementById('open-takedown-btn');
+  const takedownModal = document.getElementById('takedown-modal');
+
+  // Handle image upload preview
+  iconInput?.addEventListener('change', () => {
+    const file = iconInput.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const preview = document.getElementById('image-preview');
+        const uploadLabel = document.getElementById('upload-label');
+        if (preview && e.target?.result) {
+          preview.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-xl" alt="App Icon" />`;
+        }
+        if (uploadLabel) {
+          uploadLabel.textContent = `✓ ${file.name}`;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Presets
+  const btnRogueByteXL = document.getElementById('preset-rogue-bytexl');
+  const btnSideloadApk = document.getElementById('preset-sideload-apk');
+  const btnOfficialApp = document.getElementById('preset-official-app');
+
+  btnRogueByteXL?.addEventListener('click', () => {
+    titleInput.value = 'ByteXL Placement Exam & Student Desk';
+    linkInput.value = 'https://play.google.com/store/apps/details?id=com.bytexl.placement.guide';
+    storeSelect.value = 'Google Play';
+    appForm.requestSubmit();
+  });
+
+  btnSideloadApk?.addEventListener('click', () => {
+    titleInput.value = 'ByteXL Exam Prep Cracked APK';
+    linkInput.value = 'https://bytexl-exam.en.uptodown.com/android';
+    storeSelect.value = 'Uptodown';
+    appForm.requestSubmit();
+  });
+
+  btnOfficialApp?.addEventListener('click', () => {
+    titleInput.value = 'ByteXL Student Learning Portal';
+    linkInput.value = 'https://play.google.com/store/apps/details?id=com.bytexl.learning';
+    storeSelect.value = 'Google Play';
+    appForm.requestSubmit();
+  });
+
+  function autoDetectBrand(str: string): string {
+    const lower = str.toLowerCase();
+    if (lower.includes('zomato')) return 'Zomato';
+    if (lower.includes('paytm')) return 'Paytm';
+    if (lower.includes('zerodha')) return 'Zerodha';
+    return 'ByteXL';
+  }
+
+  appForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (spinner && btnText) {
+      spinner.classList.remove('hidden');
+      btnText.classList.add('hidden');
+    }
+    if (runBtn) runBtn.disabled = true;
+
+    // Parse package id from link if present
+    const rawLink = linkInput.value.trim();
+    let packageId = "com.bytexl.placement.guide";
+    if (rawLink.includes('id=')) {
+      packageId = rawLink.split('id=')[1].split('&')[0];
+    } else if (rawLink.includes('.')) {
+      packageId = rawLink.replace(/https?:\/\/[^\/]+\//, '').replace(/\//g, '.');
+    }
+
+    const appTitle = titleInput.value.trim() || 'Mobile App';
+    const brandName = autoDetectBrand(`${rawLink} ${appTitle}`);
+
+    const payload = {
+      brand_name: brandName,
+      app_title: appTitle,
+      package_id: packageId,
+      publisher_name: null, // Let backend automatically resolve based on package whitelist or rogue developer signature
+      store: storeSelect.value,
+      permissions_requested: [
+        "android.permission.INTERNET",
+        "android.permission.READ_SMS",
+        "android.permission.RECEIVE_SMS",
+        "android.permission.READ_CONTACTS"
+      ]
+    };
+
+    try {
+      const data = await apiFetch<any>('/api/v1/scan/app-store', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      // Clear error banner on success
+      document.getElementById('app-scan-error-banner')?.classList.add('hidden');
+      renderAppDossier(data);
+    } catch (err: any) {
+      console.error("App store backend error:", err);
+      const errBanner = document.getElementById('app-scan-error-banner');
+      const errMsg = document.getElementById('app-scan-error-message');
+      if (errBanner && errMsg) {
+        errMsg.textContent = `App Store Scan failed: ${err.message || 'Unable to connect to AegisMark AI backend at http://127.0.0.1:8000.'}`;
+        errBanner.classList.remove('hidden');
+        errBanner.scrollIntoView({ behavior: 'smooth' });
+      }
+    } finally {
+      if (spinner && btnText) {
+        spinner.classList.add('hidden');
+        btnText.classList.remove('hidden');
+      }
+      if (runBtn) runBtn.disabled = false;
+    }
+  });
+
+  // Close error banner handler
+  document.getElementById('close-app-error-banner')?.addEventListener('click', () => {
+    document.getElementById('app-scan-error-banner')?.classList.add('hidden');
+  });
+
+  function renderAppDossier(data: any) {
+    const resultsSec = document.getElementById('app-results-section');
+    resultsSec?.scrollIntoView({ behavior: 'smooth' });
+
+    (document.getElementById('app-case-id') as HTMLElement).textContent = data.scan_id;
+    (document.getElementById('app-threat-index') as HTMLElement).textContent = Math.round(data.app_threat_index).toFixed(1);
+    (document.getElementById('app-recommended-action') as HTMLElement).textContent = data.recommended_action;
+    (document.getElementById('res-store-name') as HTMLElement).textContent = data.store;
+    (document.getElementById('res-app-title') as HTMLElement).textContent = data.app_title;
+    (document.getElementById('res-publisher-name') as HTMLElement).textContent = data.publisher_name;
+    (document.getElementById('res-package-id') as HTMLElement).textContent = data.app_package_id;
+
+    const isSafe = data.is_official_app || data.app_threat_index < 30;
+
+    // Severity & Threat Index formatting
+    const threatIdxElem = document.getElementById('app-threat-index');
+    if (threatIdxElem) {
+      threatIdxElem.className = `font-serif text-6xl sm:text-7xl font-bold tracking-tight ${
+        isSafe ? 'text-[#5db872]' : 'text-[#c64545] dark:text-[#f87171]'
+      }`;
+    }
+
+    const sevBadge = document.getElementById('app-severity-badge') as HTMLElement;
+    if (sevBadge) {
+      sevBadge.textContent = `${data.severity_level.replace(/_/g, ' ')} THREAT LEVEL`;
+      sevBadge.className = `px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-xl inline-block w-full border ${
+        data.severity_level === 'CRITICAL'
+          ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 border-red-200 dark:border-red-900'
+          : data.severity_level === 'HIGH'
+          ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-900'
+          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900'
+      }`;
+    }
+
+    // Publisher Alert Banner
+    const alertBanner = document.getElementById('publisher-mismatch-banner');
+    if (alertBanner) {
+      if (data.publisher_mismatch_alert) {
+        alertBanner.classList.remove('hidden');
+        (document.getElementById('publisher-alert-text') as HTMLElement).textContent = data.publisher_mismatch_alert;
+      } else {
+        alertBanner.classList.add('hidden');
+      }
+    }
+
+    // Pillar 1: AI Bot Reviews
+    const p1Bot = data.review_forensics?.bot_probability_pct ?? 0;
+    const p1Score = document.getElementById('p1-bot-score');
+    if (p1Score) {
+      p1Score.textContent = `${p1Bot.toFixed(1)}% AI`;
+      p1Score.className = `font-serif text-xl font-bold ${p1Bot >= 50 ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+    const p1Pattern = document.getElementById('p1-bot-pattern');
+    if (p1Pattern) {
+      p1Pattern.textContent = data.review_forensics?.hyperbolic_praise_detected ? 'Synthesized Praise' : 'Organic Reviews';
+      p1Pattern.className = p1Bot >= 50 ? 'text-[#c64545]' : 'text-[#5db872]';
+    }
+
+    // Pillar 2: Velocity
+    const p2Burst = document.getElementById('p2-burst-score');
+    if (p2Burst) {
+      p2Burst.textContent = `${data.review_forensics?.temporal_burst_window_hours || 0}h Window`;
+      p2Burst.className = `font-serif text-xl font-bold ${data.review_forensics?.astroturfing_burst_detected ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+    const p2Pattern = document.getElementById('p2-burst-pattern');
+    if (p2Pattern) {
+      p2Pattern.textContent = data.review_forensics?.astroturfing_burst_detected ? 'Coordinated Campaign' : 'Organic Velocity';
+      p2Pattern.className = data.review_forensics?.astroturfing_burst_detected ? 'text-[#c64545]' : 'text-[#5db872]';
+    }
+
+    // Pillar 3: Developer OSINT
+    const p3Score = document.getElementById('p3-pub-score');
+    if (p3Score) {
+      p3Score.textContent = `${data.publisher_portfolio?.average_app_lifespan_days || 0}d avg lifespan`;
+      p3Score.className = `font-serif text-xl font-bold ${isSafe ? 'text-[#5db872]' : 'text-[#c64545]'}`;
+    }
+    const p3Pattern = document.getElementById('p3-pub-pattern');
+    if (p3Pattern) {
+      p3Pattern.textContent = isSafe ? 'Verified Enterprise' : 'Burner Syndicate';
+      p3Pattern.className = isSafe ? 'text-[#5db872]' : 'text-[#c64545]';
+    }
+
+    // Pillar 4: Bimodal Ratings
+    const split = data.review_forensics?.rating_bimodal_split || { "5_star": 0, "4_star": 0, "3_star": 0, "2_star": 0, "1_star": 0 };
+    const totalRev = data.review_forensics?.total_reviews_analyzed || 1;
+    (document.getElementById('p4-total-reviews') as HTMLElement).textContent = totalRev.toLocaleString();
+
+    const p4Status = document.getElementById('p4-bimodal-status');
+    if (p4Status) {
+      if (isSafe) {
+        p4Status.textContent = "BALANCED RATINGS";
+        p4Status.className = "text-[10px] font-bold bg-[#5db872]/15 text-[#5db872] border border-[#5db872]/30 px-2 py-0.5 rounded-full uppercase";
+      } else {
+        p4Status.textContent = "POLARIZED U-CURVE";
+        p4Status.className = "text-[10px] font-bold bg-[#c64545]/15 text-[#c64545] border border-[#c64545]/30 px-2 py-0.5 rounded-full uppercase";
+      }
+    }
+
+    // Update rating bars dynamically
+    const maxBar = Math.max(split["5_star"] || 0, split["1_star"] || 0, split["4_star"] || 0, 1);
+    const updateBar = (starKey: string, elemPrefix: string) => {
+      const count = split[starKey] || 0;
+      const pct = Math.round((count / totalRev) * 100);
+      const barW = Math.round((count / maxBar) * 100);
+      const barElem = document.getElementById(`bar-${elemPrefix}`);
+      const countElem = document.getElementById(`count-${elemPrefix}`);
+      const pctElem = document.getElementById(`pct-${elemPrefix}`);
+      if (barElem) barElem.style.width = `${barW}%`;
+      if (countElem) countElem.textContent = count.toLocaleString();
+      if (pctElem) pctElem.textContent = `(${pct}%)`;
+    };
+    updateBar("5_star", "5star");
+    updateBar("4_star", "4star");
+    updateBar("3_star", "3star");
+    updateBar("2_star", "2star");
+    updateBar("1_star", "1star");
+
+    // Pillar 5: Permissions Risk
+    const p5Score = document.getElementById('p5-perm-score');
+    if (p5Score) {
+      p5Score.textContent = `${data.permissions_risk_score.toFixed(0)}% Risk`;
+      p5Score.className = `font-serif text-xl font-bold ${data.permissions_risk_score > 30 ? 'text-[#c64545]' : 'text-[#5db872]'}`;
+    }
+    const p5Exploit = document.getElementById('p5-perm-exploit');
+    if (p5Exploit) {
+      p5Exploit.textContent = data.flagged_permissions?.length > 0 ? `${data.flagged_permissions.length} High-Risk Perms` : 'Zero Dangerous Perms';
+      p5Exploit.className = data.flagged_permissions?.length > 0 ? 'text-[#c64545]' : 'text-[#5db872]';
+    }
+    const smsPermsElem = document.getElementById('res-sms-perms');
+    if (smsPermsElem) {
+      smsPermsElem.textContent = data.flagged_permissions?.length > 0 ? data.flagged_permissions.join(' + ') : 'None (Safe Sandbox)';
+      smsPermsElem.className = data.flagged_permissions?.length > 0 ? 'font-bold text-[#c64545] truncate block' : 'font-bold text-[#5db872] truncate block';
+    }
+
+    // Render Review Citations & Victim Complaints
+    const snippetsContainer = document.getElementById('res-review-snippets');
+    const snippetsCount = document.getElementById('snippets-count');
+    if (snippetsContainer) {
+      const snippets = data.review_forensics?.flagged_review_snippets || [];
+      if (snippetsCount) snippetsCount.textContent = `${snippets.length} Citations Indexed`;
+      if (snippets.length > 0) {
+        snippetsContainer.innerHTML = snippets.map((s: string) => {
+          const isVictim = s.toLowerCase().includes('victim') || s.toLowerCase().includes('fraud') || s.toLowerCase().includes('1-star');
+          return `
+            <div class="p-3.5 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border-l-4 ${isVictim ? 'border-[#c64545]' : 'border-[#e8a55a]'} text-xs font-mono text-[#141413] dark:text-[#faf9f5] space-y-1">
+              <span class="text-[10px] uppercase font-bold ${isVictim ? 'text-[#c64545]' : 'text-[#e8a55a]'} block">
+                ${isVictim ? '🚨 Authentic Victim Fraud Report (1-Star)' : '🤖 Coordinated LLM Bot Synthesis (5-Star Cluster)'}
+              </span>
+              <p class="leading-relaxed">${s}</p>
+            </div>
+          `;
+        }).join('');
+      } else {
+        snippetsContainer.innerHTML = `
+          <div class="p-4 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#5db872]">
+            ✓ Zero suspicious bot clusters or victim fraud reports detected. Genuine organic store distribution.
+          </div>
+        `;
+      }
+    }
+
+    // Render Discovered Developer Portfolio Apps
+    const portfolioContainer = document.getElementById('res-portfolio-apps');
+    const repBadge = document.getElementById('portfolio-reputation-badge');
+    if (portfolioContainer) {
+      const apps = data.publisher_portfolio?.portfolio_apps || [];
+      if (repBadge) {
+        repBadge.textContent = data.publisher_portfolio?.reputation_status.replace(/_/g, ' ') || 'UNKNOWN';
+        repBadge.className = `px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase border ${
+          isSafe
+            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900'
+            : 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 border-red-200 dark:border-red-900'
+        }`;
+      }
+      if (apps.length > 0) {
+        portfolioContainer.innerHTML = apps.map((app: any) => `
+          <div class="p-3.5 rounded-2xl bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] flex flex-col justify-between space-y-2 card-lift">
+            <div>
+              <div class="flex items-center justify-between text-[10px] font-mono mb-1">
+                <span class="text-[#78756d]">★ ${app.rating}</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold ${app.status === 'VERIFIED' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
+                  ${app.status}
+                </span>
+              </div>
+              <h5 class="font-bold text-xs text-[#141413] dark:text-[#faf9f5] line-clamp-1">${app.app_title}</h5>
+              <div class="text-[10px] font-mono text-[#78756d] truncate mt-0.5">${app.package_id}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        portfolioContainer.innerHTML = `<div class="col-span-full py-4 text-xs font-mono text-[#78756d]">No associated sister apps discovered.</div>`;
+      }
+    }
+
+    // Takedown Strike Button status
+    const takedownBtn = document.getElementById('open-takedown-btn') as HTMLButtonElement;
+    if (takedownBtn) {
+      if (!isSafe) {
+        takedownBtn.disabled = false;
+        takedownBtn.className = "bg-[#c64545] hover:bg-[#a83636] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl shadow-md transition-all flex items-center gap-2 btn-3d-pop cursor-pointer opacity-100";
+        takedownBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>1-Click App Store Abuse Strike</span>
+        `;
+      } else {
+        takedownBtn.disabled = true;
+        takedownBtn.className = "bg-[#78756d]/30 text-[#78756d] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-2xl transition-all flex items-center gap-2 cursor-not-allowed opacity-60";
+        takedownBtn.innerHTML = `
+          <svg class="w-4 h-4 text-[#5db872]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span>Official App (Strike Inactive)</span>
+        `;
+      }
+    }
+
+    // Configure strike package text
+    if (!isSafe) {
+      const strikeText = `GOOGLE PLAY DEVELOPER ABUSE REPORT & TRADEMARK IMPERSONATION NOTICE
+Date: ${new Date().toUTCString()}
+Ref: GP-STRIKE-${data.scan_id}
+Notice To: Google Play Developer Support, Policy Enforcement Team
+
+VIOLATING APP INFORMATION:
+- App Title: ${data.app_title}
+- Package Name: ${data.app_package_id}
+- Declared Publisher: ${data.publisher_name}
+- Store: ${data.store}
+- App Threat Index: ${data.app_threat_index}/100 (${data.severity_level})
+
+POLICY INFRINGEMENT CITATIONS:
+1. Google Play Developer Program Policy - Impersonation (Section 1.3):
+   Unauthorized commercial reproduction of trademarked brand assets.
+2. Synthetic Bot Reviews Astroturfing:
+   Astroturfed review clusters artificially inflating store rating (${data.review_forensics?.bot_probability_pct}% AI probability) while masking victim complaints.
+3. Intrusive Permission Harvesting:
+   Dangerous requests for ${(data.flagged_permissions || []).join(', ')} without functional pedagogical justification.
+
+MANDATORY ACTION DEMANDED:
+Immediate suspension of package ${data.app_package_id} and audit of developer account ${data.publisher_name}.
+
+Submitted by: AegisMark AI Cyber Operations`;
+
+      const modalTextarea = document.getElementById('modal-takedown-text') as HTMLTextAreaElement;
+      if (modalTextarea) modalTextarea.value = strikeText;
+      const modalCaseId = document.getElementById('modal-case-id') as HTMLElement;
+      if (modalCaseId) modalCaseId.textContent = `GP-STRIKE-${data.scan_id}`;
+    }
+  }
+
+  openTakedownBtn?.addEventListener('click', () => {
+    const takedownBtn = document.getElementById('open-takedown-btn') as HTMLButtonElement;
+    if (takedownBtn && !takedownBtn.disabled) {
+      takedownModal?.classList.remove('hidden');
+    }
+  });
+</script>

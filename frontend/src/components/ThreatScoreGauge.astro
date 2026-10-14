@@ -1,0 +1,69 @@
+---
+interface Props {
+  score: number;
+  severity: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { score = 0, severity = 'LOW', label = 'THREAT INDEX', size = 'md' } = Astro.props;
+
+const colorMap = {
+  CRITICAL: '#c31833',
+  HIGH: '#fa9000',
+  MEDIUM: '#dba200',
+  LOW: '#10b981'
+};
+
+const strokeColor = colorMap[severity] || '#595959';
+const radius = size === 'lg' ? 48 : size === 'md' ? 36 : 24;
+const circumference = 2 * Math.PI * radius;
+const strokeDashoffset = circumference - (score / 100) * circumference;
+---
+
+<div class="flex flex-col items-center justify-center p-4 bg-white border border-hairline rounded-sm">
+  <div class="relative flex items-center justify-center">
+    <svg class="transform -rotate-90" width={radius * 2 + 20} height={radius * 2 + 20}>
+      <circle
+        cx={radius + 10}
+        cy={radius + 10}
+        r={radius}
+        stroke="#f0f0f0"
+        stroke-width={size === 'lg' ? 10 : 8}
+        fill="transparent"
+      />
+      <circle
+        cx={radius + 10}
+        cy={radius + 10}
+        r={radius}
+        stroke={strokeColor}
+        stroke-width={size === 'lg' ? 10 : 8}
+        stroke-dasharray={circumference}
+        stroke-dashoffset={strokeDashoffset}
+        stroke-linecap="square"
+        fill="transparent"
+        class="transition-all duration-1000 ease-out"
+      />
+    </svg>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+      <span class="text-2xl sm:text-3xl font-black text-ink font-mono tracking-tight">
+        {Math.round(score)}
+      </span>
+      <span class="text-[10px] text-slate font-mono uppercase tracking-wider">
+        / 100
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-3 flex flex-col items-center gap-1">
+    <span
+      class="text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-xs text-white"
+      style={`background-color: ${strokeColor};`}
+    >
+      {severity} THREAT
+    </span>
+    <span class="text-[11px] font-medium text-slate uppercase tracking-wider font-mono">
+      {label}
+    </span>
+  </div>
+</div>

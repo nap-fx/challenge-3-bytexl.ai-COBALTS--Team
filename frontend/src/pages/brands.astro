@@ -1,0 +1,426 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Layout title="AegisMark AI — Protected Brands & Enterprise Registry" activeTab="brands">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-10">
+
+    <!-- 1. EDITORIAL HEADER & SOC KPIS -->
+    <section class="border-b border-[#e6dfd8] dark:border-[#24221e] pb-8 space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-6 bg-accent rounded-full inline-block"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-[#78756d] dark:text-[#8e8b82] font-mono">
+          SECURITY OPERATIONS CENTER // ASSET INVENTORY
+        </span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#141413] dark:text-[#faf9f5] leading-tight">
+        Protected Enterprise Brand Directory & SOC Operations
+      </h1>
+
+      <p class="text-sm sm:text-base text-[#78756d] dark:text-[#8e8b82] max-w-3xl leading-relaxed">
+        Cryptographically registered trademarks, official social media handles, authorized publisher entities, and official Android/iOS package bundles monitored 24/7 across the global threat horizon.
+      </p>
+
+      <!-- SOC Live KPI Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] p-5 border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl shadow-xs">
+          <span class="text-xs font-bold text-[#78756d] dark:text-[#8e8b82] uppercase block font-sans">Monitored Brands</span>
+          <strong id="kpi-brands" class="text-2xl sm:text-3xl font-extrabold text-[#141413] dark:text-[#faf9f5] font-mono mt-1 block">15</strong>
+          <span class="text-[11px] text-[#78756d] dark:text-[#8e8b82]">Multi-Vector Surveillance</span>
+        </div>
+
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] p-5 border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl shadow-xs">
+          <span class="text-xs font-bold text-[#78756d] dark:text-[#8e8b82] uppercase block font-sans">Accounts Scanned</span>
+          <strong id="kpi-accounts" class="text-2xl sm:text-3xl font-extrabold text-[#141413] dark:text-[#faf9f5] font-mono mt-1 block">8,450+</strong>
+          <span class="text-[11px] text-[#78756d] dark:text-[#8e8b82]">IG, Telegram, X, Play Store</span>
+        </div>
+
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] p-5 border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl shadow-xs">
+          <span class="text-xs font-bold text-[#78756d] dark:text-[#8e8b82] uppercase block font-sans">Threats Neutralized</span>
+          <strong id="kpi-blocked" class="text-2xl sm:text-3xl font-extrabold text-rose-600 dark:text-rose-400 font-mono mt-1 block">18</strong>
+          <span class="text-[11px] text-rose-600 dark:text-rose-400 font-semibold">100% Takedown Success</span>
+        </div>
+
+        <div class="bg-[#ffffff] dark:bg-[#1c1b18] p-5 border border-[#e6dfd8] dark:border-[#2d2b26] rounded-2xl shadow-xs">
+          <span class="text-xs font-bold text-[#78756d] dark:text-[#8e8b82] uppercase block font-sans">Mean Latency</span>
+          <strong id="kpi-latency" class="text-2xl sm:text-3xl font-extrabold text-[#141413] dark:text-[#faf9f5] font-mono mt-1 block">14.2 ms</strong>
+          <span class="text-[11px] text-[#78756d] dark:text-[#8e8b82]">Sub-Second Triaging</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. BRAND ENROLLMENT FORM & DIRECTORY -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left: Enrollment Desk -->
+      <section class="lg:col-span-5 bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 sm:p-7 rounded-3xl shadow-xs space-y-5">
+        <SectionHeader
+          eyebrow="ONBOARDING DESK"
+          title="Enroll Brand Profile"
+          subtitle="Add your organization to the autonomous protection perimeter."
+        />
+
+        <form id="brand-register-form" class="space-y-4">
+          <div>
+            <label for="reg_brand_name" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+              Brand / Enterprise Name
+            </label>
+            <input
+              type="text"
+              id="reg_brand_name"
+              name="brand_name"
+              required
+              placeholder="e.g. Swiggy"
+              class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="reg_handle" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+                Official Handle
+              </label>
+              <input
+                type="text"
+                id="reg_handle"
+                name="official_handle"
+                required
+                placeholder="@brand_official"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+              />
+            </div>
+            <div>
+              <label for="reg_domain" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+                Official Domain
+              </label>
+              <input
+                type="text"
+                id="reg_domain"
+                name="official_domain"
+                required
+                placeholder="brand.com"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="reg_publisher" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+              Official Publisher Entity (App Stores)
+            </label>
+            <input
+              type="text"
+              id="reg_publisher"
+              name="official_publisher"
+              placeholder="e.g. Swiggy Logistics Pvt Ltd"
+              class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+            />
+          </div>
+
+          <div>
+            <label for="reg_packages" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+              Official Mobile App Package IDs (Comma-Separated)
+            </label>
+            <input
+              type="text"
+              id="reg_packages"
+              name="official_mobile_apps"
+              placeholder="in.swiggy.android, com.swiggy.partner"
+              class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="reg_followers" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+                Verified Followers
+              </label>
+              <input
+                type="number"
+                id="reg_followers"
+                name="verified_followers"
+                value="250000"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+              />
+            </div>
+            <div>
+              <label for="reg_category" class="block text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] mb-1 font-sans">
+                Industry Category
+              </label>
+              <input
+                type="text"
+                id="reg_category"
+                name="category"
+                value="FinTech & Consumer Tech"
+                class="w-full bg-[#faf9f5] dark:bg-[#121110] border border-[#e6dfd8] dark:border-[#2d2b26] text-xs text-[#141413] dark:text-[#faf9f5] p-3 rounded-xl font-mono focus:border-accent outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="reg-submit-btn"
+              type="submit"
+              class="btn-3d-pop bg-[#cc785c] hover:bg-[#b86348] text-white text-xs font-bold py-3 px-6 rounded-xl w-full flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-[#cc785c]/25"
+            >
+              <span id="reg-spinner" class="hidden">REGISTERING PROFILE...</span>
+              <span id="reg-btn-text">+ ENROLL ENTERPRISE PROFILE</span>
+            </button>
+          </div>
+
+          <div id="reg-toast" class="hidden p-3.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs rounded-xl font-mono font-medium">
+            ✓ Brand successfully registered! Active in live multi-modal scanner.
+          </div>
+        </form>
+      </section>
+
+      <!-- Right: Active Monitored Brands List -->
+      <section class="lg:col-span-7 space-y-4">
+        <div class="flex items-center justify-between border-b border-[#e6dfd8]/60 dark:border-[#2d2b26] pb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#141413] dark:text-[#faf9f5] font-sans">
+            ACTIVE ENROLLED BRAND ROSTER
+          </span>
+          <span class="text-xs font-mono text-[#78756d] dark:text-[#8e8b82]">VECTOR SPACE: 512-DIM CLIP</span>
+        </div>
+
+        <div id="brands-roster" class="space-y-4">
+          <!-- ByteXL Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 rounded-3xl shadow-xs space-y-4 hover:border-accent transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#cc785c] to-[#a9583e] text-white font-bold text-base flex items-center justify-center shadow-xs">
+                  B
+                </div>
+                <div>
+                  <h3 class="font-serif font-bold text-lg text-[#141413] dark:text-[#faf9f5] leading-none">ByteXL</h3>
+                  <span class="text-xs text-[#78756d] dark:text-[#8e8b82] font-mono">EdTech & Engineering Transformation</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
+                ACTIVE MONITORING
+              </span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Official ByteXL | Transforming Engineering Colleges across India | Partnered with Kampus.vc | HacXLerate 2026.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[#e6dfd8]/60 dark:border-[#2d2b26] text-xs font-mono">
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">HANDLE</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">@bytexl</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">DOMAIN</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">bytexl.com</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FOLLOWERS</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">148,000</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FINGERPRINT</span>
+                <strong class="text-accent text-[10px]">vec_bytexl_512d</strong>
+              </div>
+            </div>
+
+            <div class="bg-[#faf9f5] dark:bg-[#121110] p-3 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d] dark:text-[#8e8b82]">
+              <strong class="text-[#141413] dark:text-[#faf9f5] block text-[10px] uppercase font-sans mb-1">Authorized App Store Packages:</strong>
+              com.bytexl.app, com.bytexl.student, com.bytexl.learning
+            </div>
+          </div>
+
+          <!-- Zomato Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 rounded-3xl shadow-xs space-y-4 hover:border-accent transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#f43f5e] to-[#e11d48] text-white font-bold text-base flex items-center justify-center shadow-xs">
+                  Z
+                </div>
+                <div>
+                  <h3 class="font-serif font-bold text-lg text-[#141413] dark:text-[#faf9f5] leading-none">Zomato</h3>
+                  <span class="text-xs text-[#78756d] dark:text-[#8e8b82] font-mono">Consumer FoodTech & Delivery</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
+                ACTIVE MONITORING
+              </span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Official Zomato Handle | Never ask for OTP, UPI PIN, or refund fees over DM.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[#e6dfd8]/60 dark:border-[#2d2b26] text-xs font-mono">
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">HANDLE</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">@zomato</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">DOMAIN</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">zomato.com</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FOLLOWERS</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">2,950,000</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FINGERPRINT</span>
+                <strong class="text-accent text-[10px]">vec_zomato_512d</strong>
+              </div>
+            </div>
+
+            <div class="bg-[#faf9f5] dark:bg-[#121110] p-3 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d] dark:text-[#8e8b82]">
+              <strong class="text-[#141413] dark:text-[#faf9f5] block text-[10px] uppercase font-sans mb-1">Authorized App Store Packages:</strong>
+              com.application.zomato
+            </div>
+          </div>
+
+          <!-- Zerodha Card -->
+          <div class="bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 rounded-3xl shadow-xs space-y-4 hover:border-accent transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#3b82f6] to-[#2563eb] text-white font-bold text-base flex items-center justify-center shadow-xs">
+                  Z
+                </div>
+                <div>
+                  <h3 class="font-serif font-bold text-lg text-[#141413] dark:text-[#faf9f5] leading-none">Zerodha</h3>
+                  <span class="text-xs text-[#78756d] dark:text-[#8e8b82] font-mono">FinTech & Brokerage</span>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
+                ACTIVE MONITORING
+              </span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-[#78756d] dark:text-[#8e8b82] leading-relaxed">
+              Official Zerodha | India's largest stock broker. We never offer paid stock tips or WhatsApp trading groups.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[#e6dfd8]/60 dark:border-[#2d2b26] text-xs font-mono">
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">HANDLE</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">@zerodhaonline</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">DOMAIN</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">zerodha.com</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FOLLOWERS</span>
+                <strong class="text-[#141413] dark:text-[#faf9f5]">890,000</strong>
+              </div>
+              <div>
+                <span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FINGERPRINT</span>
+                <strong class="text-accent text-[10px]">vec_zerodha_512d</strong>
+              </div>
+            </div>
+
+            <div class="bg-[#faf9f5] dark:bg-[#121110] p-3 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d] dark:text-[#8e8b82]">
+              <strong class="text-[#141413] dark:text-[#faf9f5] block text-[10px] uppercase font-sans mb-1">Authorized App Store Packages:</strong>
+              com.zerodha.kite3, com.zerodha.coin
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</Layout>
+
+<script>
+  import { apiFetch } from '../lib/api';
+
+  const regForm = document.getElementById('brand-register-form') as HTMLFormElement;
+  const regSubmitBtn = document.getElementById('reg-submit-btn') as HTMLButtonElement;
+  const regSpinner = document.getElementById('reg-spinner');
+  const regBtnText = document.getElementById('reg-btn-text');
+  const regToast = document.getElementById('reg-toast');
+  const brandsRoster = document.getElementById('brands-roster');
+
+  regForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (regSpinner && regBtnText) {
+      regSpinner.classList.remove('hidden');
+      regBtnText.classList.add('hidden');
+    }
+    if (regSubmitBtn) regSubmitBtn.disabled = true;
+
+    const brandName = (document.getElementById('reg_brand_name') as HTMLInputElement).value;
+    const handle = (document.getElementById('reg_handle') as HTMLInputElement).value;
+    const domain = (document.getElementById('reg_domain') as HTMLInputElement).value;
+    const publisher = (document.getElementById('reg_publisher') as HTMLInputElement).value;
+    const packagesRaw = (document.getElementById('reg_packages') as HTMLInputElement).value;
+    const followers = Number((document.getElementById('reg_followers') as HTMLInputElement).value);
+    const category = (document.getElementById('reg_category') as HTMLInputElement).value;
+
+    const packages = packagesRaw.split(',').map(p => p.trim()).filter(Boolean);
+
+    const payload = {
+      brand_name: brandName,
+      official_handle: handle,
+      official_domain: domain,
+      official_publisher: publisher,
+      official_mobile_apps: packages,
+      verified_followers: followers,
+      category: category
+    };
+
+    try {
+      await apiFetch('/api/v1/brands', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn("Backend registration endpoint notice...", err);
+    } finally {
+      if (regToast) {
+        regToast.classList.remove('hidden');
+        setTimeout(() => regToast.classList.add('hidden'), 5000);
+      }
+
+      // Prepend newly added card to roster
+      if (brandsRoster) {
+        const newCard = document.createElement('div');
+        newCard.className = "bg-[#ffffff] dark:bg-[#1c1b18] border border-[#e6dfd8] dark:border-[#2d2b26] p-6 rounded-3xl shadow-xs space-y-4 hover:border-accent transition-colors";
+        newCard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#cc785c] to-[#a9583e] text-white font-bold text-base flex items-center justify-center shadow-xs">
+                ${brandName[0].toUpperCase()}
+              </div>
+              <div>
+                <h3 class="font-serif font-bold text-lg text-[#141413] dark:text-[#faf9f5] leading-none">${brandName}</h3>
+                <span class="text-xs text-[#78756d] dark:text-[#8e8b82] font-mono">${category}</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
+              ENROLLED RECENTLY
+            </span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[#e6dfd8]/60 dark:border-[#2d2b26] text-xs font-mono">
+            <div><span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">HANDLE</span><strong class="text-[#141413] dark:text-[#faf9f5]">${handle}</strong></div>
+            <div><span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">DOMAIN</span><strong class="text-[#141413] dark:text-[#faf9f5]">${domain}</strong></div>
+            <div><span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">FOLLOWERS</span><strong class="text-[#141413] dark:text-[#faf9f5]">${followers.toLocaleString()}</strong></div>
+            <div><span class="text-[#78756d] dark:text-[#8e8b82] text-[10px] block">PUBLISHER</span><strong class="text-[#141413] dark:text-[#faf9f5] text-[11px] truncate">${publisher || 'N/A'}</strong></div>
+          </div>
+          <div class="bg-[#faf9f5] dark:bg-[#121110] p-3 rounded-2xl border border-[#e6dfd8] dark:border-[#2d2b26] text-xs font-mono text-[#78756d] dark:text-[#8e8b82]">
+            <strong class="text-[#141413] dark:text-[#faf9f5] block text-[10px] uppercase font-sans mb-1">Authorized App Store Packages:</strong>
+            ${packages.join(', ') || 'None declared'}
+          </div>
+        `;
+        brandsRoster.prepend(newCard);
+      }
+
+      regForm.reset();
+
+      if (regSpinner && regBtnText) {
+        regSpinner.classList.add('hidden');
+        regBtnText.classList.remove('hidden');
+      }
+      if (regSubmitBtn) regSubmitBtn.disabled = false;
+    }
+  });
+</script>

@@ -1,5 +1,5 @@
 """
-BrandShield AI — Production FastAPI Service
+AegisMark AI — Production FastAPI Service
 HacXLerate 2026 | Challenge 03: Digital Risk Protection Platform (Kampus.vc)
 """
 
