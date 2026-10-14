@@ -5,6 +5,10 @@
 > **Target Track:** Challenge 03 — Digital Risk Protection (Brand Impersonation, Scam Accounts & Rogue Apps)  
 > **Target Audience:** VC Judges (Kampus.vc), Technical Mentors (ByteXL), and Enterprise Security Leads  
 
+> [!IMPORTANT]
+> **Backend & Neural Engine Notice:**  
+> The backend multi-modal detection engine is actively under continuous development. Full real-world deep neural network architecture fine-tuning (512-dimensional custom CLIP/ViT weights, dense optical character recognition tensor pipelines, and scaled transformer scam intent classifiers) requires ongoing enterprise dataset training and GPU cluster synchronization. The current live build operates on a high-throughput hybrid architecture combining rapid heuristic extractors, lexical graph manifolds, and pre-indexed brand feature vectors for immediate forensic evaluation.
+
 ---
 
 ## 1. Executive Summary & Problem Statement
